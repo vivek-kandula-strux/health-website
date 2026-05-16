@@ -1,0 +1,13 @@
+# Anara Health — robots policy
+# Currently: PRIVATE PREVIEW. Disallow all crawlers.
+# When ready for public launch, swap to the "PUBLIC" block below.
+
+User-agent: *
+Disallow: /
+
+# --- PUBLIC LAUNCH (uncomment when ready, and remove the disallow above) ---
+# User-agent: *
+# Allow: /
+# Disallow: /404.html
+#
+# Sitemap: https://your-domain.com/sitemap.xml

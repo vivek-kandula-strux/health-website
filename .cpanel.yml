@@ -1,0 +1,19 @@
+# ============================================================
+# cPanel git-based deployment manifest
+#
+# This file lets cPanel auto-deploy from this repo. To use:
+#  1. In cPanel → Git Version Control → Create, point at this repo.
+#  2. After clone, hit "Manage" → "Pull or Deploy" → "Update from Remote".
+#  3. Hit "Deploy HEAD Commit" — cPanel runs the tasks below.
+#
+# Replace USERNAME below with your cPanel username (the segment after
+# /home/ in your cPanel home path, e.g. /home/strux → USERNAME=strux).
+# If you're not sure: log into cPanel → top right shows the username.
+# ============================================================
+
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/USERNAME/public_html/
+    - /bin/cp -R seniornest-clone/. $DEPLOYPATH
+    - /bin/cp seniornest-clone/.htaccess $DEPLOYPATH.htaccess
