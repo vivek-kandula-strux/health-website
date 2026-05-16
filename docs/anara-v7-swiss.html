@@ -584,5 +584,73 @@
       }
     })();
   </script>
+
+  <!-- Design Variants Footer (cross-variant navigation) -->
+  <aside class="versions-strip" role="complementary" aria-label="Design variants navigation">
+    <div class="vs-inner">
+      <div class="vs-head">
+        <span class="vs-label">Design Variants</span>
+        <span class="vs-sep" aria-hidden="true">·</span>
+        <span class="vs-meta">Seven directions for Anara Health · same content, different design language</span>
+      </div>
+      <nav class="vs-links" aria-label="All design variants">
+        <a href="./anara-v1-bento.html" class="vs-link"><strong>01</strong> Bento Modular</a>
+        <a href="./anara-v2-glass.html" class="vs-link"><strong>02</strong> Glassmorphism</a>
+        <a href="./anara-v3-gradient.html" class="vs-link"><strong>03</strong> Gradient</a>
+        <a href="./anara-v4-minimal.html" class="vs-link"><strong>04</strong> Minimal</a>
+        <a href="./anara-v5-editorial.html" class="vs-link"><strong>05</strong> Editorial</a>
+        <a href="./anara-v6-dark-luxury.html" class="vs-link"><strong>06</strong> Dark Luxury</a>
+        <a href="./anara-v7-swiss.html" class="vs-link"><strong>07</strong> Swiss</a>
+      </nav>
+      <div class="vs-foot">
+        <a href="./picker.html" class="vs-side">All variants overview ↗</a>
+        <span class="vs-sep" aria-hidden="true">·</span>
+        <a href="./anara.html" class="vs-side">Original homepage</a>
+        <span class="vs-sep" aria-hidden="true">·</span>
+        <a href="./header.html" class="vs-side">Hero comparison</a>
+      </div>
+    </div>
+  </aside>
+  <style>
+    .versions-strip {
+      background: #0A0A12; color: #F5F5F0;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      padding: 36px 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .versions-strip * { box-sizing: border-box; }
+    .versions-strip .vs-inner { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+    .versions-strip .vs-head { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,245,240,0.6); }
+    .versions-strip .vs-label { color: #C9A56C; font-weight: 600; }
+    .versions-strip .vs-meta { color: rgba(245,245,240,0.55); font-weight: 500; text-transform: none; letter-spacing: 0.02em; font-size: 13px; }
+    .versions-strip .vs-sep { color: rgba(245,245,240,0.25); }
+    .versions-strip .vs-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .versions-strip .vs-link { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); color: rgba(245,245,240,0.85); text-decoration: none; font-size: 13px; font-weight: 500; transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease; }
+    .versions-strip .vs-link strong { font-family: "Fraunces", Georgia, serif; font-size: 13px; font-weight: 600; color: rgba(245,245,240,0.55); }
+    .versions-strip .vs-link:hover { background: rgba(255,255,255,0.08); border-color: rgba(201,165,108,0.4); color: #F5F5F0; transform: translateY(-1px); }
+    .versions-strip .vs-link:hover strong { color: #C9A56C; }
+    .versions-strip .vs-link.current { background: #C9A56C; border-color: #C9A56C; color: #0A0A12; }
+    .versions-strip .vs-link.current strong { color: #0A0A12; }
+    .versions-strip .vs-foot { display: flex; gap: 12px; align-items: center; font-size: 13px; color: rgba(245,245,240,0.55); padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap; }
+    .versions-strip .vs-side { color: rgba(245,245,240,0.78); border-bottom: 1px solid rgba(245,245,240,0.2); padding-bottom: 1px; transition: color .2s ease, border-color .2s ease; text-decoration: none; }
+    .versions-strip .vs-side:hover { color: #C9A56C; border-color: #C9A56C; }
+    @media (max-width: 720px) {
+      .versions-strip { padding: 28px 20px; }
+      .versions-strip .vs-link { padding: 7px 12px; font-size: 12px; }
+      .versions-strip .vs-link strong { font-size: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .versions-strip .vs-link:hover { transform: none; }
+    }
+  </style>
+  <script>
+    (function() {
+      var path = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.versions-strip .vs-link, .versions-strip .vs-side').forEach(function(link) {
+        var href = link.getAttribute('href').replace(/^\.\//, '');
+        if (href === path) link.classList.add('current');
+      });
+    })();
+  </script>
 </body>
 </html>
