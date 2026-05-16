@@ -15,5 +15,5 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/USERNAME/public_html/
-    - /bin/cp -R seniornest-clone/. $DEPLOYPATH
-    - /bin/cp seniornest-clone/.htaccess $DEPLOYPATH.htaccess
+    - /bin/cp -R docs/. $DEPLOYPATH
+    - /bin/cp docs/.htaccess $DEPLOYPATH.htaccess
