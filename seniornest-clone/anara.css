@@ -1,0 +1,288 @@
+/* ---------- Anara palette override (sourced from anara.health CSS) ----------
+   Brand purple: #8E108C  (primary, most-used)
+   Magenta accent: #DF18DC
+   Deep purple: #7C00BA / #A62EE2
+   Ink: #101828 / #1A1B1F
+   Body text: #43464D
+   Muted: #758696
+   Bg off-white: #FBFAFF (lavender-tinted)
+   Warm gray: #F5F4F2
+*/
+.anara {
+  --bg: #FBFAFF;
+  --bg-2: #F5F4F2;
+  --surface: #FFFFFF;
+  --ink: #101828;
+  --ink-2: #43464D;
+  --muted: #5C6B78;
+  --line: #E7E4ED;
+  --accent: #8E108C;
+  --accent-2: #A62EE2;
+  --accent-soft: #F3E2F3;
+  --gold: #DF18DC;
+  --focus: 0 0 0 3px rgba(143, 16, 140, 0.22);
+}
+
+/* Brand name tweak */
+.anara .brand-name { letter-spacing: -0.02em; }
+.anara .brand-dot { color: var(--accent); margin: 0 2px; }
+
+/* Slightly tighter, more "B2B" display */
+.anara .display { letter-spacing: -0.03em; max-width: 16ch; }
+.anara .mission-text { max-width: 24ch; }
+.anara .mission-text em { font-style: italic; color: var(--accent); }
+.anara .mission-text .hl {
+  background: linear-gradient(180deg, transparent 65%, var(--accent-soft) 65%);
+}
+
+/* Trust badge: small dot variant (no avatar stack) */
+.anara .trust-badge .dot {
+  width: 8px; height: 8px;
+  background: #2EBE7A;
+  box-shadow: 0 0 0 4px rgba(46,190,122,.18);
+}
+
+/* ---------- Stat strip ---------- */
+.anara .stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 56px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 28px 8px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+.anara .stat-strip > div {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 4px 12px;
+  border-left: 1px solid var(--line);
+}
+.anara .stat-strip > div:first-child { border-left: 0; }
+.anara .stat-strip dt,
+.anara .stat-strip dd { display: block; line-height: 1.1; }
+.anara .stat-strip strong {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.anara .stat-strip strong em {
+  font-style: normal; color: var(--ink-2); font-size: 0.55em; margin-left: 2px;
+}
+.anara .stat-strip span {
+  font-size: 12px;
+  color: var(--ink-2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+@media (max-width: 720px) {
+  .anara .stat-strip { grid-template-columns: repeat(2, 1fr); gap: 16px 0; padding: 20px 8px; }
+  .anara .stat-strip > div:nth-child(odd) { border-left: 0; }
+}
+
+/* ---------- Buttons: deeper, more corporate ---------- */
+.anara .btn-primary { background: var(--accent); }
+.anara .btn-primary:hover { background: var(--accent-2); }
+.anara .btn-pill { background: var(--ink); }
+.anara .btn-pill:hover { background: var(--accent); }
+
+/* ---------- Why cards: leaner top border accent ---------- */
+.anara .why-card {
+  position: relative;
+}
+.anara .why-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 24px; right: 24px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 0 0 4px 4px;
+  opacity: 0.85;
+}
+.anara .why-card .num {
+  color: var(--accent);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+}
+
+/* ---------- Services: a hint of medical depth ---------- */
+.anara .service-card { border-color: var(--line); }
+.anara .service-body .arrow { background: var(--accent-soft); color: var(--accent); }
+
+/* ---------- Process: numbered step squares instead of circles ---------- */
+.anara .step-num {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--accent);
+}
+
+/* ---------- Principles SVG icon block ---------- */
+.anara .p-icon {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.anara .p-icon svg { display: block; }
+.anara .p-card { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.anara .p-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--accent-soft); }
+
+/* ---------- Testimonials feature card uses brand purple ---------- */
+.anara .t-card-feature { background: var(--accent); }
+.anara .t-card-feature footer span { opacity: 0.9; }
+.anara .t-card-feature .stars { color: #FFD58A; }
+
+/* ---------- CTA: deep gradient teal ---------- */
+.anara .cta-inner {
+  background: radial-gradient(ellipse at top right, #A62EE2 0%, #4A0B6B 70%);
+}
+.anara .cta .btn-primary { background: #fff; color: var(--accent); }
+.anara .cta .btn-primary:hover { background: var(--accent-soft); }
+.anara .cta-contact {
+  margin-top: 32px;
+  display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap;
+  font-size: 14px;
+  color: rgba(255,255,255,0.88);
+}
+.anara .cta-contact a {
+  color: #fff;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255,255,255,0.35);
+  padding: 2px 0;
+  transition: border-color .15s ease;
+}
+.anara .cta-contact a:hover { border-color: #fff; }
+.anara .cta-contact a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.anara .cta-contact span { opacity: 0.45; }
+
+/* ---------- FAQ accordion ---------- */
+.anara .faq { padding: 96px 0; background: var(--bg-2); }
+.anara .faq-list {
+  max-width: 820px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.anara .faq-list details {
+  border-bottom: 1px solid var(--line);
+}
+.anara .faq-list details:last-child { border-bottom: 0; }
+.anara .faq-list summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 22px 28px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--ink);
+  font-weight: 500;
+  transition: background .15s ease;
+}
+.anara .faq-list summary::-webkit-details-marker { display: none; }
+.anara .faq-list summary:hover { background: var(--bg-2); }
+.anara .faq-list summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  background: var(--bg-2);
+}
+.anara .faq-list .chev {
+  position: relative;
+  display: inline-block;
+  width: 22px; height: 22px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  transition: transform .25s ease, background .2s ease;
+}
+.anara .faq-list .chev::before,
+.anara .faq-list .chev::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  background: var(--accent);
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+}
+.anara .faq-list .chev::before { width: 10px; height: 2px; }
+.anara .faq-list .chev::after { width: 2px; height: 10px; transition: transform .25s ease; }
+.anara .faq-list details[open] .chev { transform: rotate(180deg); background: var(--accent); }
+.anara .faq-list details[open] .chev::before { background: #fff; }
+.anara .faq-list details[open] .chev::after { background: #fff; transform: translate(-50%, -50%) scaleY(0); }
+.anara .faq-list details p {
+  padding: 0 28px 24px;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 64ch;
+}
+
+/* ---------- Brand mark in nav: teal ---------- */
+.anara .brand-mark { color: var(--accent); }
+
+/* ---------- Section eyebrow color ---------- */
+.anara .eyebrow { color: var(--accent); }
+
+/* ---------- Footer: cooler grays for purple harmony ---------- */
+.anara .footer { background: #1A0B26; color: #C5BFD1; }
+.anara .footer .f-col a { color: #C5BFD1; }
+.anara .footer .f-col a:hover { color: #fff; }
+.anara .footer .f-base { color: #9991A6; }
+.anara .footer .f-base a { color: #C5BFD1; }
+.anara .socials a:hover { background: var(--accent); }
+.anara .socials a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ---------- Hero image badge tweak ---------- */
+.anara .hero-card-2 strong { color: var(--accent); }
+.anara .hero-card .dot { background: var(--accent); box-shadow: 0 0 0 4px rgba(14,92,127,.18); }
+
+/* ---------- Section padding rhythm tightening for B2B feel ---------- */
+.anara .mission { padding: 88px 0; }
+.anara .about { padding: 80px 0 96px; }
+
+/* ---------- Nav toggle open state (mobile) ---------- */
+.anara .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.anara .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.anara .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+.anara .nav-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Mobile rhythm tightening ---------- */
+@media (max-width: 540px) {
+  .anara .hero { padding: 40px 0 32px; }
+  .anara .mission { padding: 64px 0; }
+  .anara .about { padding: 56px 0 72px; }
+  .anara .why,
+  .anara .services,
+  .anara .process,
+  .anara .gallery,
+  .anara .testimonials,
+  .anara .principles,
+  .anara .faq { padding: 64px 0; }
+  .anara .team { padding: 64px 0 48px; }
+  .anara .cta { padding: 56px 0; }
+  .anara .cta-inner { padding: 56px 24px; border-radius: 24px; }
+  .anara .section-head { margin-bottom: 36px; }
+}

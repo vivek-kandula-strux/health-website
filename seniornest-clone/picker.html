@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#8E108C" />
+  <title>Anara Health — Six Design Directions</title>
+  <meta name="description" content="Six complete homepage variants for Anara Health. Pick one." />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 4 L28 26 H4 Z M11 26 L16 14 L21 26' fill='none' stroke='%238E108C' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #FBFAFF;
+      --surface: #FFFFFF;
+      --ink: #101828;
+      --ink-2: #43464D;
+      --muted: #5C6B78;
+      --line: #E7E4ED;
+      --accent: #8E108C;
+      --accent-2: #A62EE2;
+      --accent-soft: #F3E2F3;
+      --magenta: #DF18DC;
+      --serif: "Fraunces", Georgia, serif;
+      --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --radius: 24px;
+      --shadow-sm: 0 1px 2px rgba(31,27,22,0.04), 0 4px 14px rgba(31,27,22,0.05);
+      --shadow-lg: 0 24px 60px rgba(31,27,22,0.14);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 500; margin: 0; letter-spacing: -0.02em; }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(251, 250, 255, 0.85);
+      backdrop-filter: saturate(150%) blur(14px);
+      -webkit-backdrop-filter: saturate(150%) blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 18px 32px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; }
+    .brand-mark { color: var(--accent); display: inline-flex; }
+    .brand-name { font-family: var(--serif); font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+    .topbar-meta { font-size: 13px; color: var(--muted); letter-spacing: 0.04em; }
+    .topbar-meta strong { color: var(--ink); font-weight: 600; }
+    .topbar a.live {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+      padding: 6px 12px;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      transition: all .2s ease;
+    }
+    .topbar a.live:hover { background: var(--accent); color: #fff; }
+
+    .hero { max-width: 1280px; margin: 0 auto; padding: 80px 32px 56px; text-align: center; }
+    .hero .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 6px 14px;
+      background: var(--accent-soft);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .hero .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(143,16,140,0.2); }
+    .hero h1 {
+      font-size: clamp(40px, 6vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      max-width: 18ch;
+      margin: 22px auto 18px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--accent), var(--magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      max-width: 58ch;
+      margin: 0 auto;
+      color: var(--ink-2);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .variants {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 32px 96px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+    .variants .v-card.feature { grid-column: span 2; }
+    .v-card {
+      position: relative;
+      display: flex; flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .v-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(143,16,140,0.3);
+    }
+    .v-thumb {
+      position: relative;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+    .v-thumb .canvas {
+      position: absolute; inset: 0;
+      transition: transform .6s ease;
+    }
+    .v-card:hover .canvas { transform: scale(1.03); }
+
+    /* ---- V1 BENTO thumb ---- */
+    .vt-bento {
+      background: linear-gradient(135deg, #FBFAFF 0%, #F5F0F8 100%);
+      padding: 28px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 56px;
+      gap: 10px;
+    }
+    .vt-bento > div { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(31,27,22,0.05); }
+    .vt-bento .b1 { grid-column: span 2; grid-row: span 2; background: linear-gradient(135deg, #8E108C, #A62EE2); }
+    .vt-bento .b2 { grid-column: span 2; }
+    .vt-bento .b3 { grid-column: span 2; }
+    .vt-bento .b4 { grid-column: span 2; grid-row: span 2; }
+    .vt-bento .b5 { grid-column: span 2; }
+
+    /* ---- V2 GLASS thumb ---- */
+    .vt-glass {
+      background: linear-gradient(135deg, #2a0d4a 0%, #8E108C 50%, #DF18DC 100%);
+      overflow: hidden;
+    }
+    .vt-glass::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(223,24,220,0.4) 0%, transparent 50%);
+    }
+    .vt-glass .g-card {
+      position: absolute;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    }
+    .vt-glass .g1 { top: 18%; left: 8%; width: 48%; height: 50%; }
+    .vt-glass .g2 { top: 12%; right: 8%; width: 32%; height: 32%; }
+    .vt-glass .g3 { bottom: 12%; right: 12%; width: 38%; height: 28%; }
+
+    /* ---- V3 GRADIENT thumb ---- */
+    .vt-gradient {
+      background:
+        radial-gradient(circle at 20% 30%, #DF18DC 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, #8E108C 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, #F5C7F5 0%, transparent 40%),
+        linear-gradient(135deg, #4A0B6B 0%, #8E108C 100%);
+      animation: drift 10s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+      from { background-position: 0% 0%, 100% 100%, 50% 50%, 0 0; }
+      to   { background-position: 20% 10%, 80% 90%, 60% 40%, 0 0; }
+    }
+    .vt-gradient::after {
+      content: "Aa";
+      position: absolute;
+      inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif);
+      font-size: 120px;
+      font-style: italic;
+      color: rgba(255,255,255,0.95);
+      letter-spacing: -0.04em;
+    }
+
+    /* ---- V4 MINIMAL thumb ---- */
+    .vt-minimal {
+      background: #fff;
+      display: flex; flex-direction: column;
+      padding: 36px 40px;
+    }
+    .vt-minimal .label {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .vt-minimal .big {
+      font-family: var(--serif);
+      font-size: 56px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      font-weight: 500;
+      margin-bottom: auto;
+    }
+    .vt-minimal .big em { font-style: italic; }
+    .vt-minimal .rule { width: 100%; height: 1px; background: var(--line); margin: 16px 0 12px; }
+    .vt-minimal .row {
+      display: flex; gap: 24px;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* ---- V6 DARK LUXURY thumb ---- */
+    .vt-dark {
+      background: #0A0A0F;
+      padding: 28px 32px;
+      display: flex; flex-direction: column;
+    }
+    .vt-dark .label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #C9A56C;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+    .vt-dark .big {
+      font-family: var(--serif);
+      font-size: 44px;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      color: #F5F5F0;
+      font-weight: 400;
+      margin-bottom: auto;
+    }
+    .vt-dark .big em { font-style: italic; color: #C9A56C; }
+    .vt-dark .rule { width: 100%; height: 1px; background: #2A2A33; margin: 14px 0 12px; }
+    .vt-dark .row {
+      display: flex; justify-content: space-between;
+      font-size: 10px;
+      color: #8E8E92;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .vt-dark .row strong { color: #C9A56C; font-weight: 600; }
+
+    /* ---- V7 SWISS thumb ---- */
+    .vt-swiss {
+      background: #FFFFFF;
+      padding: 24px 28px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto auto;
+      gap: 10px;
+    }
+    .vt-swiss .label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #000;
+      font-weight: 600;
+    }
+    .vt-swiss .num {
+      font-family: var(--sans);
+      font-size: 86px;
+      font-weight: 600;
+      line-height: 0.9;
+      color: #000;
+      letter-spacing: -0.05em;
+    }
+    .vt-swiss .num em { font-style: normal; color: var(--accent); }
+    .vt-swiss .head {
+      font-family: var(--sans);
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #000;
+      max-width: 22ch;
+    }
+    .vt-swiss .rule { width: 100%; height: 1px; background: #E0E0E0; }
+    .vt-swiss .meta {
+      font-size: 10px;
+      color: #707070;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      display: flex; justify-content: space-between;
+    }
+
+    .v-body { padding: 24px 28px 26px; display: flex; flex-direction: column; gap: 6px; }
+    .v-num {
+      font-family: var(--serif);
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+    }
+    .v-title { font-size: 22px; line-height: 1.2; color: var(--ink); letter-spacing: -0.02em; }
+    .v-vibe { font-size: 13px; color: var(--muted); letter-spacing: 0.02em; }
+    .v-desc { font-size: 14px; color: var(--ink-2); line-height: 1.55; margin: 8px 0 16px; }
+    .v-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .v-tags span {
+      font-size: 11px;
+      padding: 4px 10px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-2);
+      font-weight: 500;
+    }
+    .v-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-top: auto;
+    }
+    .v-cta::after { content: "→"; transition: transform .2s ease; }
+    .v-card:hover .v-cta::after { transform: translateX(4px); }
+
+    .discipline {
+      background: var(--surface);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 80px 32px;
+    }
+    .discipline-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+    .discipline .label {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .discipline h2 {
+      font-size: clamp(28px, 3.6vw, 44px);
+      line-height: 1.1;
+      max-width: 22ch;
+      margin: 0 auto 18px;
+    }
+    .discipline p {
+      max-width: 60ch;
+      margin: 0 auto 44px;
+      color: var(--ink-2);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+    .discipline-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      text-align: left;
+    }
+    .discipline-grid > div {
+      padding: 22px 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--bg);
+    }
+    .discipline-grid strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .discipline-grid span { font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+
+    .foot {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 48px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .foot a { color: var(--ink-2); border-bottom: 1px solid var(--line); padding-bottom: 1px; }
+    .foot a:hover { color: var(--accent); border-color: var(--accent); }
+
+    @media (max-width: 880px) {
+      .variants { grid-template-columns: 1fr; gap: 20px; padding: 16px 20px 64px; }
+      .variants .v-card.feature { grid-column: span 1; }
+      .hero { padding: 56px 20px 40px; }
+      .topbar-inner { padding: 14px 20px; }
+      .topbar-meta { display: none; }
+      .discipline { padding: 64px 20px; }
+      .discipline-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./picker.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 4 L28 26 H4 Z"/>
+            <path d="M11 26 L16 14 L21 26"/>
+          </svg>
+        </span>
+        <span class="brand-name">Anara <span style="color:var(--accent)">·</span> Health</span>
+      </a>
+      <div class="topbar-meta"><strong>6 directions</strong> · same content · pick one</div>
+      <a class="live" href="./anara.html">Current live page →</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <span class="eyebrow"><span class="dot"></span> Design selection</span>
+    <h1>Six complete homepages. <em>One brand.</em> Pick the direction.</h1>
+    <p>Every variant carries the same copy, the same nav, the same testimonials, the same FAQ. Only the design language changes — and within each variant, every section obeys one through-line so the page never feels stitched together.</p>
+  </section>
+
+  <section class="variants" aria-label="Variants">
+
+    <a class="v-card" href="./anara-v1-bento.html">
+      <div class="v-thumb">
+        <div class="canvas vt-bento">
+          <div class="b1"></div><div class="b2"></div><div class="b3"></div><div class="b4"></div><div class="b5"></div>
+        </div>
+      </div>
+      <div class="v-body">
+        <span class="v-num">01</span>
+        <h3 class="v-title">Bento Modular</h3>
+        <span class="v-vibe">Apple iPad Pro × Linear × Attio</span>
+        <p class="v-desc">Every section is a grid of rounded cards in varying sizes. Reads as a working product, not a brochure. Strongest fit for HR buyers who need to feel operational confidence at a glance.</p>
+        <div class="v-tags">
+          <span>24px radius</span>
+          <span>Warm soft shadow</span>
+          <span>Card-lift hover</span>
+          <span>Feature card per grid</span>
+        </div>
+        <span class="v-cta">Open variant </span>
+      </div>
+    </a>
+
+    <a class="v-card" href="./anara-v2-glass.html">
+      <div class="v-thumb">
+        <div class="canvas vt-glass">
+          <div class="g-card g1"></div>
+          <div class="g-card g2"></div>
+          <div class="g-card g3"></div>
+        </div>
+      </div>
+      <div class="v-body">
+        <span class="v-num">02</span>
+        <h3 class="v-title">Glassmorphism · Cinematic Depth</h3>
+        <span class="v-vibe">Apple Vision Pro × Whoop × Oura</span>
+        <p class="v-desc">Frosted glass tiles layered over full-bleed imagery and deep purple mesh gradients. Content always floats over depth — never sits flat. The most modern and emotional of the five.</p>
+        <div class="v-tags">
+          <span>28px radius</span>
+          <span>backdrop-blur 20px</span>
+          <span>Ken-burns zoom</span>
+          <span>Z-depth everywhere</span>
+        </div>
+        <span class="v-cta">Open variant </span>
+      </div>
+    </a>
+
+    <a class="v-card" href="./anara-v3-gradient.html">
+      <div class="v-thumb">
+        <div class="canvas vt-gradient"></div>
+      </div>
+      <div class="v-body">
+        <span class="v-num">03</span>
+        <h3 class="v-title">Gradient · Aurora</h3>
+        <span class="v-vibe">Stripe × Vercel × Linear</span>
+        <p class="v-desc">Mesh gradients drive every section — gradient-text headlines, gradient-outlined cards, gradient-filled buttons. Vivid, conversion-tuned, energetic. Best for younger HR / startup buyers.</p>
+        <div class="v-tags">
+          <span>Purple → magenta → pink</span>
+          <span>Gradient text</span>
+          <span>Drifting mesh bg</span>
+          <span>20px radius</span>
+        </div>
+        <span class="v-cta">Open variant </span>
+      </div>
+    </a>
+
+    <a class="v-card" href="./anara-v4-minimal.html">
+      <div class="v-thumb">
+        <div class="canvas vt-minimal">
+          <div class="label">01 — Anara Health</div>
+          <div class="big">Care that comes <em>to</em> the office.</div>
+          <div class="rule"></div>
+          <div class="row"><span>130+ partners</span><span>4.8 ★</span><span>24/7</span></div>
+        </div>
+      </div>
+      <div class="v-body">
+        <span class="v-num">04</span>
+        <h3 class="v-title">Minimalism · Editorial Restraint</h3>
+        <span class="v-vibe">Apple product pages × iA Writer × Tracksmith</span>
+        <p class="v-desc">No cards. No shadows. No rounded corners. Hairline 1px dividers replace every container. Typography does all the work. Restraint reads as authority. Best for premium enterprise buyers.</p>
+        <div class="v-tags">
+          <span>White everywhere</span>
+          <span>Hairline dividers</span>
+          <span>140px section padding</span>
+          <span>No motion</span>
+        </div>
+        <span class="v-cta">Open variant </span>
+      </div>
+    </a>
+
+    <a class="v-card" href="./anara-v6-dark-luxury.html">
+      <div class="v-thumb">
+        <div class="canvas vt-dark">
+          <div class="label">Anara · Concierge Healthcare</div>
+          <div class="big">Care, <em>quietly</em> delivered.</div>
+          <div class="rule"></div>
+          <div class="row">
+            <span>130+ partners</span>
+            <span>200+ providers</span>
+            <strong>4.8 ★</strong>
+          </div>
+        </div>
+      </div>
+      <div class="v-body">
+        <span class="v-num">06</span>
+        <h3 class="v-title">Dark Monochrome Luxury</h3>
+        <span class="v-vibe">Whoop × Oura × Tom Ford × Mayo Executive</span>
+        <p class="v-desc">Near-black canvas, champagne-gold hairline accents, black-and-white photography. Generous whitespace. Light-weight Fraunces. Reads as the contrarian premium choice — a private medical practice for those who can afford one.</p>
+        <div class="v-tags">
+          <span>Charcoal #0A0A0F</span>
+          <span>Champagne gold</span>
+          <span>Fraunces 300-400</span>
+          <span>B&amp;W imagery</span>
+          <span>Slow gold reveals</span>
+        </div>
+        <span class="v-cta">Open variant </span>
+      </div>
+    </a>
+
+    <a class="v-card" href="./anara-v7-swiss.html">
+      <div class="v-thumb">
+        <div class="canvas vt-swiss">
+          <div class="label">01 — Workforce Health</div>
+          <div class="num">200<em>+</em></div>
+          <div class="head">Care providers in network.</div>
+          <div class="rule"></div>
+          <div class="meta">
+            <span>Anara Health</span>
+            <span>Issue 01</span>
+          </div>
+        </div>
+      </div>
+      <div class="v-body">
+        <span class="v-num">07</span>
+        <h3 class="v-title">Swiss Typography</h3>
+        <span class="v-vibe">Müller-Brockmann × Vignelli × Stripe Atlas × old Linear</span>
+        <p class="v-desc">Strict 12-column grid, fixed modular type scale, hairline dividers in place of every card. One purple accent. Discipline as luxury — feels engineered rather than designed. The most serious of the seven.</p>
+        <div class="v-tags">
+          <span>12-col grid</span>
+          <span>Inter as Helvetica</span>
+          <span>Hairline rules</span>
+          <span>One accent only</span>
+          <span>No rounded crops</span>
+        </div>
+        <span class="v-cta">Open variant </span>
+      </div>
+    </a>
+
+  </section>
+
+  <section class="discipline">
+    <div class="discipline-inner">
+      <div class="label">Through-line discipline</div>
+      <h2>Why none of these feel stitched together.</h2>
+      <p>Every variant locks five decisions and applies them across every section — hero, mission, about, why, services, process, gallery, team, testimonials, principles, FAQ, CTA, footer. Same content, same nav, same brand purple. Only the design language shifts.</p>
+      <div class="discipline-grid">
+        <div><strong>One radius</strong><span>24px bento · 28px glass · 20px gradient · 4px minimal · 4-8px dark · 0px Swiss</span></div>
+        <div><strong>One shadow</strong><span>Warm soft · cinematic deep · gradient glow · none · subtle gold halo · none</span></div>
+        <div><strong>One imagery treatment</strong><span>Rounded crops · full-bleed atmospheric · duotone wash · edge-aligned natural · B&amp;W luxury · grayscale 1:1</span></div>
+        <div><strong>One motion grammar</strong><span>Card-lift · parallax depth · gradient drift · ultra-restrained · slow gold reveals · click ripple</span></div>
+        <div><strong>One headline rhythm</strong><span>Fraunces in V1–V6 · Inter (Helvetica substitute) in V7 Swiss</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Anara Health · Six design directions · same content, lifted verbatim from <a href="./anara.html">anara.html</a></span>
+    <span>Hero-only comparison? <a href="./header.html">See header.html</a></span>
+  </footer>
+
+</body>
+</html>

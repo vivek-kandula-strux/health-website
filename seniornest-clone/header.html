@@ -1,0 +1,1044 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#8E108C" />
+  <title>Anara Hero Options — 5 Premium Directions</title>
+  <meta name="description" content="Five hero direction explorations for Anara Health — pick one." />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 4 L28 26 H4 Z M11 26 L16 14 L21 26' fill='none' stroke='%238E108C' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="anara.css" />
+
+  <style>
+    /* =========================================================
+       Page chrome: option switcher + section headers
+       ========================================================= */
+    .anara .opt-switch {
+      position: sticky; top: 72px; z-index: 40;
+      background: rgba(251, 250, 255, 0.86);
+      backdrop-filter: saturate(150%) blur(14px);
+      -webkit-backdrop-filter: saturate(150%) blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .anara .opt-switch-inner {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 24px;
+      max-width: var(--container);
+      margin: 0 auto;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .anara .opt-switch-inner::-webkit-scrollbar { display: none; }
+    .anara .opt-switch-label {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      white-space: nowrap;
+      padding-right: 6px;
+    }
+    .anara .opt-switch a {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--ink-2);
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all .15s ease;
+    }
+    .anara .opt-switch a:hover { color: var(--accent); border-color: var(--accent); }
+    .anara .opt-switch a strong {
+      font-family: var(--serif);
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    .anara .opt-meta {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 56px 24px 24px;
+      display: flex; align-items: baseline; gap: 18px;
+      flex-wrap: wrap;
+      border-top: 1px dashed var(--line);
+    }
+    .anara .opt-meta:first-of-type { border-top: 0; padding-top: 40px; }
+    .anara .opt-meta .opt-num {
+      font-family: var(--serif);
+      font-size: 48px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .anara .opt-meta .opt-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .anara .opt-meta .opt-vibe {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* =========================================================
+       HERO 1 — Split editorial with portrait stack
+       ========================================================= */
+    .h1 { padding: 24px 0 96px; }
+    .h1 .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .h1 .eyebrow { color: var(--accent); }
+    .h1 h1 {
+      font-family: var(--serif);
+      font-size: clamp(40px, 5.4vw, 72px);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      font-weight: 500;
+      margin: 18px 0 22px;
+      max-width: 14ch;
+    }
+    .h1 h1 em { font-style: italic; color: var(--accent); font-weight: 500; }
+    .h1 .lede {
+      max-width: 46ch;
+      color: var(--ink-2);
+      font-size: 17px;
+      line-height: 1.6;
+      margin: 0 0 30px;
+    }
+    .h1 .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+    .h1 .trust-row {
+      display: flex; align-items: center; gap: 22px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+    .h1 .trust-row .label {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .h1 .trust-row .clients {
+      display: flex; gap: 20px; flex-wrap: wrap;
+      font-family: var(--serif);
+      font-size: 17px;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      font-weight: 500;
+    }
+    .h1 .trust-row .clients span { opacity: 0.7; }
+    .h1 .stack {
+      position: relative;
+      aspect-ratio: 4/5;
+    }
+    .h1 .stack img {
+      position: absolute;
+      width: 64%;
+      height: 56%;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 24px 60px rgba(31, 27, 22, 0.16);
+      border: 6px solid #fff;
+    }
+    .h1 .stack img:nth-child(1) { top: 0; right: 0; transform: rotate(2deg); }
+    .h1 .stack img:nth-child(2) { bottom: 20%; left: 0; transform: rotate(-3deg); z-index: 2; }
+    .h1 .stack img:nth-child(3) { bottom: 0; right: 6%; transform: rotate(1deg); width: 58%; height: 48%; }
+    .h1 .live-pill {
+      position: absolute;
+      bottom: 12%; right: -8px;
+      z-index: 3;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 18px 10px 14px;
+      display: inline-flex; align-items: center; gap: 10px;
+      box-shadow: 0 10px 30px rgba(31, 27, 22, 0.12);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .h1 .live-pill .pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #2EBE7A;
+      box-shadow: 0 0 0 4px rgba(46, 190, 122, 0.2);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(46, 190, 122, 0.2); }
+      50% { box-shadow: 0 0 0 8px rgba(46, 190, 122, 0.08); }
+    }
+    @media (max-width: 980px) {
+      .h1 .grid { grid-template-columns: 1fr; gap: 48px; }
+      .h1 .stack { max-width: 480px; margin: 0 auto; }
+    }
+
+    /* =========================================================
+       HERO 2 — Cinematic full-bleed with glass overlay
+       ========================================================= */
+    .h2 { padding: 0; position: relative; }
+    .h2 .bleed {
+      position: relative;
+      height: clamp(560px, 78vh, 800px);
+      overflow: hidden;
+      border-radius: 0;
+    }
+    .h2 .bleed::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(100deg, rgba(26, 11, 38, 0.7) 0%, rgba(26, 11, 38, 0.45) 40%, rgba(26, 11, 38, 0.2) 100%);
+      z-index: 2;
+    }
+    .h2 .bleed img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      animation: kenburns 22s ease-in-out infinite alternate;
+    }
+    @keyframes kenburns {
+      from { transform: scale(1.02) translateX(0); }
+      to { transform: scale(1.08) translateX(-1%); }
+    }
+    .h2 .overlay {
+      position: absolute; inset: 0; z-index: 3;
+      display: flex; align-items: center;
+    }
+    .h2 .glass {
+      max-width: 580px;
+      margin-left: clamp(24px, 8vw, 120px);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 28px;
+      padding: 44px 44px 40px;
+      box-shadow: 0 30px 80px rgba(26, 11, 38, 0.3);
+    }
+    .h2 .glass .eyebrow { color: var(--accent); margin-bottom: 16px; }
+    .h2 .glass h1 {
+      font-family: var(--serif);
+      font-size: clamp(34px, 4.4vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      font-weight: 500;
+      margin: 0 0 18px;
+    }
+    .h2 .glass p {
+      color: var(--ink-2);
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0 0 28px;
+    }
+    .h2 .glass .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .h2 .ticker {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      z-index: 3;
+      background: rgba(16, 24, 40, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .h2 .ticker-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      color: #fff;
+    }
+    .h2 .ticker-inner > div {
+      display: flex; align-items: baseline; gap: 10px;
+      padding-left: 18px;
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .h2 .ticker-inner > div:first-child { border-left: 0; padding-left: 0; }
+    .h2 .ticker-inner strong {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+    .h2 .ticker-inner span {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.04em;
+    }
+    @media (max-width: 720px) {
+      .h2 .glass { margin: 24px; padding: 32px 28px; }
+      .h2 .ticker-inner { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    }
+
+    /* =========================================================
+       HERO 3 — Bento dashboard hero
+       ========================================================= */
+    .h3 { padding: 32px 0 96px; }
+    .h3 .grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .h3 .copy h1 {
+      font-family: var(--serif);
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      font-weight: 500;
+      margin: 18px 0 20px;
+    }
+    .h3 .copy p {
+      color: var(--ink-2);
+      font-size: 17px;
+      line-height: 1.6;
+      max-width: 44ch;
+      margin: 0 0 28px;
+    }
+    .h3 .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+    .h3 .signal {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px; color: var(--muted);
+    }
+    .h3 .signal .avatars img {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid #fff; margin-left: -8px;
+    }
+    .h3 .signal .avatars img:first-child { margin-left: 0; }
+    .h3 .bento {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: 96px;
+      gap: 14px;
+    }
+    .h3 .bento > div {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; justify-content: space-between;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .h3 .bento > div:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .h3 .b-status { grid-column: span 3; grid-row: span 1; }
+    .h3 .b-image  { grid-column: span 3; grid-row: span 2; padding: 0; overflow: hidden; }
+    .h3 .b-image img { width: 100%; height: 100%; object-fit: cover; }
+    .h3 .b-vitals { grid-column: span 3; grid-row: span 2; background: var(--ink); color: #fff; border-color: var(--ink); }
+    .h3 .b-team   { grid-column: span 3; grid-row: span 1; }
+    .h3 .b-quote  { grid-column: span 6; grid-row: span 1; background: var(--accent-soft); border-color: transparent; }
+    .h3 .b-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .h3 .b-status .b-label { color: var(--accent); }
+    .h3 .b-status .row { display: flex; align-items: center; gap: 10px; }
+    .h3 .b-status .row .pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #2EBE7A;
+      box-shadow: 0 0 0 4px rgba(46, 190, 122, 0.2);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .h3 .b-status .row strong { font-family: var(--serif); font-size: 18px; font-weight: 500; color: var(--ink); }
+    .h3 .b-status .sub { font-size: 13px; color: var(--ink-2); }
+    .h3 .b-vitals .b-label { color: rgba(255,255,255,0.55); }
+    .h3 .b-vitals .vital-row {
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .h3 .b-vitals strong {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .h3 .b-vitals em { font-style: normal; font-size: 14px; color: rgba(255,255,255,0.6); }
+    .h3 .b-vitals .spark {
+      width: 110px; height: 36px;
+      stroke: var(--gold);
+      stroke-width: 2;
+      fill: none;
+    }
+    .h3 .b-vitals .spark path:nth-child(2) {
+      fill: url(#sparkfill);
+      stroke: none;
+      opacity: 0.6;
+    }
+    .h3 .b-team .members {
+      display: flex; align-items: center; gap: 0;
+    }
+    .h3 .b-team .members img {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 2px solid #fff;
+      margin-left: -10px;
+      object-fit: cover;
+    }
+    .h3 .b-team .members img:first-child { margin-left: 0; }
+    .h3 .b-team .members .more {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px; font-weight: 600;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-left: -10px;
+      border: 2px solid #fff;
+    }
+    .h3 .b-team .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .h3 .b-team strong { font-family: var(--serif); font-size: 18px; font-weight: 500; }
+    .h3 .b-quote {
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.4;
+      color: var(--ink);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+    .h3 .b-quote em { color: var(--accent); font-style: italic; }
+    @media (max-width: 980px) {
+      .h3 .grid { grid-template-columns: 1fr; gap: 48px; }
+      .h3 .bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 120px; }
+      .h3 .b-status, .h3 .b-team { grid-column: span 1; }
+      .h3 .b-image, .h3 .b-vitals { grid-column: span 2; }
+      .h3 .b-quote { grid-column: span 2; }
+    }
+
+    /* =========================================================
+       HERO 4 — Magazine cover layout
+       ========================================================= */
+    .h4 { padding: 24px 0 0; }
+    .h4 .cover {
+      position: relative;
+      max-width: var(--container);
+      margin: 0 auto;
+      height: clamp(620px, 88vh, 920px);
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(26, 11, 38, 0.18);
+    }
+    .h4 .cover img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .h4 .cover::after {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(16, 24, 40, 0.55) 0%, rgba(16, 24, 40, 0.1) 35%, rgba(16, 24, 40, 0.0) 55%, rgba(16, 24, 40, 0.85) 100%);
+      z-index: 2;
+    }
+    .h4 .vertical-eyebrow {
+      position: absolute;
+      top: 56px; left: 36px;
+      z-index: 3;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #fff;
+      font-weight: 600;
+      display: inline-flex; align-items: center; gap: 12px;
+    }
+    .h4 .vertical-eyebrow::before {
+      content: "";
+      width: 1px; height: 40px;
+      background: rgba(255,255,255,0.6);
+    }
+    .h4 .corner-mark {
+      position: absolute;
+      top: 40px; right: 40px;
+      z-index: 3;
+      color: #fff;
+      font-family: var(--serif);
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      opacity: 0.85;
+      text-align: right;
+    }
+    .h4 .corner-mark strong { display: block; font-size: 16px; font-weight: 500; }
+    .h4 .corner-mark span { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+    .h4 .head {
+      position: absolute;
+      top: 50%;
+      left: clamp(24px, 7vw, 96px);
+      right: clamp(24px, 7vw, 96px);
+      transform: translateY(-58%);
+      z-index: 3;
+      color: #fff;
+    }
+    .h4 .head h1 {
+      font-family: var(--serif);
+      font-size: clamp(54px, 8.4vw, 124px);
+      line-height: 0.96;
+      letter-spacing: -0.035em;
+      font-weight: 500;
+      color: #fff;
+      max-width: 16ch;
+      margin: 0 0 24px;
+    }
+    .h4 .head h1 em { font-style: italic; }
+    .h4 .head .lede {
+      max-width: 46ch;
+      font-size: 17px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.86);
+    }
+    .h4 .footband {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      z-index: 3;
+      padding: 28px clamp(24px, 7vw, 96px);
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 24px;
+      color: #fff;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      flex-wrap: wrap;
+    }
+    .h4 .footstats { display: flex; gap: 32px; flex-wrap: wrap; }
+    .h4 .footstats > div { display: flex; flex-direction: column; gap: 2px; }
+    .h4 .footstats strong {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .h4 .footstats span {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      font-weight: 600;
+    }
+    .h4 .float-cta {
+      position: absolute;
+      bottom: 96px; right: clamp(24px, 7vw, 96px);
+      z-index: 4;
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent);
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 999px;
+      font-weight: 500;
+      font-size: 15px;
+      box-shadow: 0 20px 50px rgba(143, 16, 140, 0.4);
+      transition: transform .2s ease, background .2s ease;
+    }
+    .h4 .float-cta:hover { background: var(--accent-2); transform: translateY(-2px); }
+    @media (max-width: 720px) {
+      .h4 .cover { border-radius: 0; }
+      .h4 .head h1 { font-size: 48px; }
+      .h4 .footstats { gap: 20px; }
+      .h4 .footstats strong { font-size: 20px; }
+      .h4 .float-cta { bottom: 200px; right: 24px; }
+    }
+
+    /* =========================================================
+       HERO 5 — Trust-first centered with logo marquee + 3-up tiles
+       ========================================================= */
+    .h5 { padding: 56px 0 0; text-align: center; }
+    .h5 .head { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+    .h5 .eyebrow-row {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 6px 14px;
+      background: var(--accent-soft);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+    .h5 .eyebrow-row .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+    }
+    .h5 h1 {
+      font-family: var(--serif);
+      font-size: clamp(40px, 6.2vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      font-weight: 500;
+      margin: 22px auto 20px;
+      max-width: 16ch;
+    }
+    .h5 h1 em { font-style: italic; color: var(--accent); }
+    .h5 .lede {
+      max-width: 60ch;
+      margin: 0 auto;
+      color: var(--ink-2);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+    .h5 .cta-row {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      margin: 32px 0 24px;
+    }
+    .h5 .micro {
+      font-size: 13px; color: var(--muted);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .h5 .micro .check {
+      width: 16px; height: 16px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700;
+    }
+    .h5 .tiles {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      gap: 16px;
+      max-width: var(--container);
+      margin: 56px auto 0;
+      padding: 0 24px;
+    }
+    .h5 .tile {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: var(--bg-2);
+      transition: transform .3s ease;
+    }
+    .h5 .tile:hover { transform: translateY(-6px); }
+    .h5 .tile img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .6s ease;
+    }
+    .h5 .tile:hover img { transform: scale(1.04); }
+    .h5 .tile.tall { aspect-ratio: 3/4.4; transform: translateY(-32px); }
+    .h5 .tile.tall:hover { transform: translateY(-38px); }
+    .h5 .tile .caption {
+      position: absolute; left: 16px; right: 16px; bottom: 16px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-align: left;
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 10px 30px rgba(31,27,22,0.12);
+    }
+    .h5 .tile .caption strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .h5 .tile .caption span { font-size: 12px; color: var(--muted); }
+    .h5 .marquee-wrap {
+      margin-top: 64px;
+      padding: 28px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+      position: relative;
+    }
+    .h5 .marquee-wrap::before,
+    .h5 .marquee-wrap::after {
+      content: "";
+      position: absolute; top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .h5 .marquee-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg) 0%, transparent 100%); }
+    .h5 .marquee-wrap::after { right: 0; background: linear-gradient(270deg, var(--bg) 0%, transparent 100%); }
+    .h5 .marquee-label {
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+    .h5 .marquee {
+      display: flex; gap: 64px;
+      animation: scroll 32s linear infinite;
+      width: max-content;
+    }
+    .h5 .marquee span {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--ink-2);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      opacity: 0.75;
+      transition: opacity .2s ease;
+    }
+    .h5 .marquee span:hover { opacity: 1; color: var(--accent); }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @media (max-width: 880px) {
+      .h5 .tiles { grid-template-columns: 1fr; gap: 14px; }
+      .h5 .tile.tall { transform: none; aspect-ratio: 4/3; }
+      .h5 .tile.tall:hover { transform: translateY(-4px); }
+      .h5 .tile { aspect-ratio: 4/3; }
+    }
+  </style>
+</head>
+<body class="anara">
+
+  <a class="skip-link" href="#opt-1">Skip to content</a>
+
+  <!-- NAV -->
+  <header class="nav-wrap">
+    <nav class="nav container" aria-label="Primary">
+      <a class="brand" href="./anara.html" aria-label="Anara Health home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+            <path d="M16 4 L28 26 H4 Z"/>
+            <path d="M11 26 L16 14 L21 26"/>
+          </svg>
+        </span>
+        <span class="brand-name">Anara <span class="brand-dot" aria-hidden="true">·</span> Health</span>
+      </a>
+      <ul class="nav-links" id="primaryNav">
+        <li><a href="./anara.html">Live page</a></li>
+        <li><a href="#opt-1">Option 1</a></li>
+        <li><a href="#opt-2">Option 2</a></li>
+        <li><a href="#opt-3">Option 3</a></li>
+        <li><a href="#opt-4">Option 4</a></li>
+        <li><a href="#opt-5">Option 5</a></li>
+      </ul>
+      <a class="btn btn-pill" href="mailto:Sales@anara.health">Get a Quote <span aria-hidden="true">→</span></a>
+    </nav>
+  </header>
+
+  <!-- Option switcher -->
+  <div class="opt-switch" aria-label="Hero option switcher">
+    <div class="opt-switch-inner">
+      <span class="opt-switch-label">Hero direction</span>
+      <a href="#opt-1"><strong>01</strong> Split editorial</a>
+      <a href="#opt-2"><strong>02</strong> Cinematic glass</a>
+      <a href="#opt-3"><strong>03</strong> Bento dashboard</a>
+      <a href="#opt-4"><strong>04</strong> Magazine cover</a>
+      <a href="#opt-5"><strong>05</strong> Trust-first marquee</a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ============================================
+         OPTION 01 — Split editorial with portrait stack
+         ============================================ -->
+    <div class="opt-meta" id="opt-1">
+      <span class="opt-num">01</span>
+      <span class="opt-title">Split editorial with portrait stack</span>
+      <span class="opt-vibe">Vibe — Mayo Clinic × Linear · Editorial confidence + asymmetric proof</span>
+    </div>
+
+    <section class="h1" aria-labelledby="h1-title">
+      <div class="container grid">
+        <div class="copy">
+          <span class="eyebrow">Concierge healthcare for Indian corporates</span>
+          <h1 id="h1-title">Top-quality healthcare, <em>made effortless</em> for your workforce.</h1>
+          <p class="lede">On-site clinics, on-demand telehealth, and a dedicated care team that brings India's best doctors directly to your office — without ever pulling employees away from work.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="mailto:Sales@anara.health">Get a Quote <span aria-hidden="true">→</span></a>
+            <a class="btn btn-ghost" href="mailto:Sales@anara.health">Schedule a Call</a>
+          </div>
+          <div class="trust-row">
+            <span class="label">Trusted by</span>
+            <div class="clients">
+              <span>Razorpay</span>
+              <span>Swiggy</span>
+              <span>Zerodha</span>
+              <span>CRED</span>
+              <span>PhonePe</span>
+            </div>
+          </div>
+        </div>
+        <div class="stack" aria-hidden="true">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&q=80&auto=format&fit=crop" alt="" width="900" height="600" loading="lazy" decoding="async" />
+          <img src="https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?w=900&q=80&auto=format&fit=crop" alt="" width="900" height="600" loading="lazy" decoding="async" />
+          <img src="https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=900&q=80&auto=format&fit=crop" alt="" width="900" height="600" loading="lazy" decoding="async" />
+          <span class="live-pill"><span class="pulse"></span> Care manager assigned · live</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         OPTION 02 — Cinematic full-bleed with glass overlay
+         ============================================ -->
+    <div class="opt-meta" id="opt-2">
+      <span class="opt-num">02</span>
+      <span class="opt-title">Cinematic full-bleed with glass overlay</span>
+      <span class="opt-vibe">Vibe — Whoop × Oura · Emotional, image-led, premium product</span>
+    </div>
+
+    <section class="h2" aria-labelledby="h2-title">
+      <div class="bleed">
+        <img src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=2000&q=85&auto=format&fit=crop" alt="A doctor consulting with a patient" width="2000" height="1125" loading="lazy" decoding="async" />
+        <div class="overlay">
+          <div class="glass">
+            <span class="eyebrow">Anara Health</span>
+            <h1 id="h2-title">Healthcare your team will actually use.</h1>
+            <p>Step into a clinic that came to you. From annual checks to a late-night fever call, every employee has a real care team — on call, on-site, on their side.</p>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="mailto:Sales@anara.health">Get a Quote <span aria-hidden="true">→</span></a>
+              <a class="btn btn-outline" href="mailto:Sales@anara.health">See it in action</a>
+            </div>
+          </div>
+        </div>
+        <div class="ticker" aria-label="Key statistics">
+          <div class="ticker-inner">
+            <div><strong>130+</strong><span>Clinic partners</span></div>
+            <div><strong>70+</strong><span>Hospital partners</span></div>
+            <div><strong>4.8★</strong><span>Customer rating</span></div>
+            <div><strong>24/7</strong><span>Telehealth</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         OPTION 03 — Bento dashboard hero
+         ============================================ -->
+    <div class="opt-meta" id="opt-3">
+      <span class="opt-num">03</span>
+      <span class="opt-title">Bento dashboard hero</span>
+      <span class="opt-vibe">Vibe — Linear × Attio × Vercel · Looks like a working product, not a brochure</span>
+    </div>
+
+    <section class="h3" aria-labelledby="h3-title">
+      <div class="container grid">
+        <div class="copy">
+          <span class="eyebrow">For HR & People Ops</span>
+          <h1 id="h3-title">One concierge care team. Every employee. Every shift.</h1>
+          <p>Anara plugs into your office with on-site clinics, 24/7 telehealth, and a real care manager per employee — so people get care without ever leaving work.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="mailto:Sales@anara.health">Get a Quote <span aria-hidden="true">→</span></a>
+            <a class="btn btn-ghost" href="mailto:Sales@anara.health">Book 30-min consult</a>
+          </div>
+          <div class="signal">
+            <div class="avatars">
+              <img src="https://i.pravatar.cc/60?img=22" alt="" width="28" height="28" loading="lazy" />
+              <img src="https://i.pravatar.cc/60?img=14" alt="" width="28" height="28" loading="lazy" />
+              <img src="https://i.pravatar.cc/60?img=47" alt="" width="28" height="28" loading="lazy" />
+              <img src="https://i.pravatar.cc/60?img=68" alt="" width="28" height="28" loading="lazy" />
+            </div>
+            <span>200+ care providers · 4.8 ★ average rating</span>
+          </div>
+        </div>
+
+        <div class="bento" aria-hidden="true">
+          <div class="b-status">
+            <span class="b-label">On-site clinic</span>
+            <div class="row">
+              <span class="pulse"></span>
+              <strong>Open today · Floor 4</strong>
+            </div>
+            <span class="sub">Dr. Mehta in clinic · 14 slots left</span>
+          </div>
+
+          <div class="b-image">
+            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=900&q=80&auto=format&fit=crop" alt="" width="900" height="600" loading="lazy" decoding="async" />
+          </div>
+
+          <div class="b-vitals">
+            <span class="b-label">Workforce wellbeing · last 30 days</span>
+            <div class="vital-row">
+              <div>
+                <strong>87<em>/100</em></strong>
+              </div>
+              <svg class="spark" viewBox="0 0 110 36">
+                <defs>
+                  <linearGradient id="sparkfill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#DF18DC" stop-opacity="0.5" />
+                    <stop offset="100%" stop-color="#DF18DC" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <path d="M0 28 L18 22 L32 26 L48 14 L66 18 L82 8 L110 12" />
+                <path d="M0 28 L18 22 L32 26 L48 14 L66 18 L82 8 L110 12 L110 36 L0 36 Z" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="b-team">
+            <div class="row">
+              <div>
+                <span class="b-label">Care pod</span>
+                <strong>4 humans assigned</strong>
+              </div>
+              <div class="members">
+                <img src="https://i.pravatar.cc/60?img=12" alt="" />
+                <img src="https://i.pravatar.cc/60?img=32" alt="" />
+                <img src="https://i.pravatar.cc/60?img=44" alt="" />
+                <span class="more">+1</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="b-quote">
+            "My care manager arranged a same-day consult and handled <em>every</em> follow-up. I never had to chase anyone." — Priya S., Eng Manager
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         OPTION 04 — Magazine cover layout
+         ============================================ -->
+    <div class="opt-meta" id="opt-4">
+      <span class="opt-num">04</span>
+      <span class="opt-title">Magazine cover layout</span>
+      <span class="opt-vibe">Vibe — Aesop × Tracksmith · Editorial, slow, status-signaling</span>
+    </div>
+
+    <section class="h4" aria-labelledby="h4-title">
+      <div class="cover">
+        <img src="https://images.unsplash.com/photo-1612531386530-97286d97c2d2?w=2000&q=85&auto=format&fit=crop" alt="A clinician at work" width="2000" height="2500" loading="lazy" decoding="async" />
+        <span class="vertical-eyebrow">Issue 01 · Workforce Health</span>
+        <div class="corner-mark">
+          <span>Anara · est. 2024</span>
+          <strong>Concierge Care, India</strong>
+        </div>
+        <div class="head">
+          <h1 id="h4-title">A doctor's visit that fits <em>between</em> meetings.</h1>
+          <p class="lede">Anara brings award-winning physicians, on-site clinics, and 24/7 telehealth to your office — built for Indian corporates that take their people seriously.</p>
+        </div>
+        <a class="float-cta" href="mailto:Sales@anara.health">Get a Quote <span aria-hidden="true">→</span></a>
+        <div class="footband">
+          <div class="footstats">
+            <div><strong>130+</strong><span>Clinic partners</span></div>
+            <div><strong>70+</strong><span>Hospital partners</span></div>
+            <div><strong>200+</strong><span>Care providers</span></div>
+            <div><strong>4.8★</strong><span>Customer rating</span></div>
+          </div>
+          <a href="mailto:Sales@anara.health" style="color:#fff; font-size:13px; letter-spacing:0.04em; opacity:0.8;">Schedule a call →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         OPTION 05 — Trust-first centered with marquee
+         ============================================ -->
+    <div class="opt-meta" id="opt-5">
+      <span class="opt-num">05</span>
+      <span class="opt-title">Trust-first with logo marquee</span>
+      <span class="opt-vibe">Vibe — Stripe × Vercel · Centered, credibility-stacked, conversion-tuned</span>
+    </div>
+
+    <section class="h5" aria-labelledby="h5-title">
+      <div class="head">
+        <span class="eyebrow-row"><span class="dot"></span> Trusted by India's leading employers</span>
+        <h1 id="h5-title">Care that comes <em>to</em> the office.</h1>
+        <p class="lede">Anara is the concierge health program built for Indian corporates — on-site clinics, 24/7 telehealth, and a dedicated care manager per employee. One partner, one invoice, zero half-days lost.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="mailto:Sales@anara.health">Get a Quote <span aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="mailto:Sales@anara.health">Schedule a Call</a>
+        </div>
+        <div class="micro"><span class="check">✓</span> Six-month pilot · No long-term lock-in · Live in 4 weeks</div>
+      </div>
+
+      <div class="tiles">
+        <div class="tile">
+          <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=900&q=80&auto=format&fit=crop" alt="On-site clinic" width="900" height="1200" loading="lazy" decoding="async" />
+          <div class="caption">
+            <strong>On-Site Clinics</strong>
+            <span>Live at your office</span>
+          </div>
+        </div>
+        <div class="tile tall">
+          <img src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=900&q=80&auto=format&fit=crop" alt="Care consultation" width="900" height="1320" loading="lazy" decoding="async" />
+          <div class="caption">
+            <strong>Concierge Care Team</strong>
+            <span>One human per employee</span>
+          </div>
+        </div>
+        <div class="tile">
+          <img src="https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?w=900&q=80&auto=format&fit=crop" alt="Telehealth on phone" width="900" height="1200" loading="lazy" decoding="async" />
+          <div class="caption">
+            <strong>Telehealth 24/7</strong>
+            <span>Late-night fever? Covered.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="marquee-wrap" aria-hidden="true">
+        <div class="marquee-label">Hospital & clinic network</div>
+        <div class="marquee">
+          <span>Apollo Hospitals</span>
+          <span>·</span>
+          <span>Fortis Healthcare</span>
+          <span>·</span>
+          <span>Manipal Hospitals</span>
+          <span>·</span>
+          <span>Max Healthcare</span>
+          <span>·</span>
+          <span>Narayana Health</span>
+          <span>·</span>
+          <span>Medanta</span>
+          <span>·</span>
+          <span>Kokilaben</span>
+          <span>·</span>
+          <span>Apollo Hospitals</span>
+          <span>·</span>
+          <span>Fortis Healthcare</span>
+          <span>·</span>
+          <span>Manipal Hospitals</span>
+          <span>·</span>
+          <span>Max Healthcare</span>
+          <span>·</span>
+          <span>Narayana Health</span>
+          <span>·</span>
+          <span>Medanta</span>
+          <span>·</span>
+          <span>Kokilaben</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Highlight active option in switcher as user scrolls
+    const opts = document.querySelectorAll('.opt-meta');
+    const links = document.querySelectorAll('.opt-switch a');
+    const setActive = (id) => {
+      links.forEach(a => {
+        const match = a.getAttribute('href') === '#' + id;
+        a.style.background = match ? 'var(--accent)' : '';
+        a.style.color = match ? '#fff' : '';
+        a.style.borderColor = match ? 'var(--accent)' : '';
+        const strong = a.querySelector('strong');
+        if (strong) strong.style.color = match ? '#fff' : 'var(--accent)';
+      });
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      opts.forEach(o => io.observe(o));
+    }
+  </script>
+</body>
+</html>

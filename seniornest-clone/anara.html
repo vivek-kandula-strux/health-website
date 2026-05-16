@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#8E108C" />
+  <title>Anara Health — Concierge Healthcare for Indian Corporates</title>
+  <meta name="description" content="On-site clinics, on-demand telehealth, and concierge care that brings India's best doctors to your workforce." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Anara Health — Concierge Healthcare for Indian Corporates" />
+  <meta property="og:description" content="On-site clinics, on-demand telehealth, and concierge care." />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 4 L28 26 H4 Z M11 26 L16 14 L21 26' fill='none' stroke='%238E108C' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1400&q=80&auto=format&fit=crop" fetchpriority="high" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="anara.css" />
+</head>
+<body class="anara">
+
+  <!-- Skip link -->
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- NAV -->
+  <header class="nav-wrap">
+    <nav class="nav container" aria-label="Primary">
+      <a class="brand" href="./anara.html" aria-label="Anara Health home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+            <path d="M16 4 L28 26 H4 Z"/>
+            <path d="M11 26 L16 14 L21 26"/>
+          </svg>
+        </span>
+        <span class="brand-name">Anara <span class="brand-dot" aria-hidden="true">·</span> Health</span>
+      </a>
+      <ul class="nav-links" id="primaryNav">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#why">Why Anara</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a class="btn btn-pill" href="#cta">Get a Quote <span aria-hidden="true">→</span></a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero-inner">
+      <div class="trust-badge">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Trusted by Indian corporates · 4.8 ★ average rating</span>
+      </div>
+      <h1 id="hero-title" class="display">Top-quality healthcare, made effortless for your workforce.</h1>
+      <p class="lede">Anara brings award-winning doctors directly to your office. On-site clinics, on-demand telehealth, and a dedicated care team — so your employees get care without ever leaving work.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#cta">Get a Quote <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost" href="#cta">Schedule a Call</a>
+      </div>
+
+      <div class="hero-image">
+        <img
+          src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1400&q=80&auto=format&fit=crop"
+          alt="Doctor consulting a patient in a modern clinic"
+          width="1400" height="788"
+          fetchpriority="high"
+          decoding="async" />
+        <div class="hero-card hero-card-1" aria-hidden="true">
+          <div class="dot"></div>
+          <div>
+            <strong>On-site clinic</strong>
+            <span>Live at your office</span>
+          </div>
+        </div>
+        <div class="hero-card hero-card-2" aria-hidden="true">
+          <strong>2h+</strong>
+          <span>Saved per visit</span>
+        </div>
+      </div>
+
+      <!-- Stat strip -->
+      <dl class="stat-strip" aria-label="Key statistics">
+        <div><dt><strong>130+</strong></dt><dd><span>Clinic Partners</span></dd></div>
+        <div><dt><strong>70+</strong></dt><dd><span>Hospital Partners</span></dd></div>
+        <div><dt><strong>4.8<em>/5</em></strong></dt><dd><span>Customer Rating</span></dd></div>
+        <div><dt><strong>24/7</strong></dt><dd><span>Telehealth Support</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- MISSION BIG TYPE -->
+  <section class="mission" aria-label="Mission">
+    <div class="container">
+      <p class="mission-text">
+        Because <em>healthy teams</em> show up — Anara keeps your people
+        <span class="hl">cared for</span>, <span class="hl">covered</span>, and
+        focused on the work that matters.
+      </p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about" aria-labelledby="about-title">
+    <div class="container grid-2">
+      <div class="about-media">
+        <img
+          src="https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?w=900&q=80&auto=format&fit=crop"
+          alt="Care team reviewing a patient case on tablet"
+          width="900" height="1125"
+          loading="lazy" decoding="async" />
+        <div class="about-stat" aria-hidden="true">
+          <strong>200+</strong>
+          <span>Care providers in network</span>
+        </div>
+      </div>
+      <div class="about-copy">
+        <span class="eyebrow">About Anara</span>
+        <h2 id="about-title">A complete employee health solution — built for Indian corporates.</h2>
+        <p>One partner for concierge care, on-site clinics, and direct access to India's leading doctors — with plans that flex around your company.</p>
+        <ul class="pills">
+          <li>On-Site Clinics</li>
+          <li>Concierge Care Team</li>
+          <li>Telehealth 24/7</li>
+          <li>Second Opinions</li>
+        </ul>
+        <p class="muted">From annual health checks to a single late-night fever call, your employees reach a real care manager — not a queue, not a chatbot — every time.</p>
+        <a class="link-arrow" href="#services">Explore services <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY ANARA -->
+  <section id="why" class="why" aria-labelledby="why-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Why Anara</span>
+        <h2 id="why-title">Why HR leaders pick Anara over conventional corporate health plans.</h2>
+      </div>
+      <div class="why-grid">
+        <article class="why-card">
+          <span class="num" aria-hidden="true">01</span>
+          <h3>Healthier, More Present Employees</h3>
+          <p>Preventive checks and easy access mean fewer sick days, faster recoveries, and a workforce that's actually at work.</p>
+        </article>
+        <article class="why-card">
+          <span class="num" aria-hidden="true">02</span>
+          <h3>A Benefit Talent Notices</h3>
+          <p>Premium concierge healthcare stands out in offer letters — a real differentiator for attracting and retaining people.</p>
+        </article>
+        <article class="why-card">
+          <span class="num" aria-hidden="true">03</span>
+          <h3>Care That Comes to the Office</h3>
+          <p>Check-ups, blood work, and follow-ups happen on-site — no commute, no waiting room, no lost half-day.</p>
+        </article>
+        <article class="why-card">
+          <span class="num" aria-hidden="true">04</span>
+          <h3>One Care Manager Per Employee</h3>
+          <p>A dedicated human who coordinates appointments, second opinions, and specialist navigation — start to finish.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="services" aria-labelledby="services-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Service Packages</span>
+        <h2 id="services-title">Pick the Anara package that fits your workforce.</h2>
+        <p class="section-sub">A modular menu — start with one service or combine them into a full program. Customize for company size, industry risk profile, and budget.</p>
+      </div>
+      <div class="services-grid">
+        <a class="service-card" href="#cta">
+          <img src="https://images.unsplash.com/photo-1631815589068-9d6a8d8c5fd9?w=800&q=80&auto=format&fit=crop" alt="" width="800" height="600" loading="lazy" decoding="async" />
+          <div class="service-body">
+            <h3>On-Site Health Clinics</h3>
+            <p>A staffed clinic inside your office for routine check-ups, vitals, basic treatments, and health screenings.</p>
+            <span class="arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+        <a class="service-card" href="#cta">
+          <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80&auto=format&fit=crop" alt="" width="800" height="600" loading="lazy" decoding="async" />
+          <div class="service-body">
+            <h3>On-Demand Telemedicine</h3>
+            <p>Round-the-clock access to licensed doctors via video and phone — for fevers, follow-ups, and second-opinion calls.</p>
+            <span class="arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+        <a class="service-card" href="#cta">
+          <img src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=800&q=80&auto=format&fit=crop" alt="" width="800" height="600" loading="lazy" decoding="async" />
+          <div class="service-body">
+            <h3>Second Opinion Service</h3>
+            <p>Independent review of diagnoses and treatment plans by top specialists — confidence before any major decision.</p>
+            <span class="arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+        <a class="service-card" href="#cta">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80&auto=format&fit=crop" alt="" width="800" height="600" loading="lazy" decoding="async" />
+          <div class="service-body">
+            <h3>Care Coordination</h3>
+            <p>A dedicated care manager who books appointments, navigates referrals, and stays with the employee through treatment.</p>
+            <span class="arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" aria-labelledby="process-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">How It Works</span>
+        <h2 id="process-title">From kickoff to ongoing care — in four simple steps.</h2>
+      </div>
+      <ol class="process-grid">
+        <li class="step">
+          <span class="step-num" aria-hidden="true">1</span>
+          <h3>Discovery &amp; Quote</h3>
+          <p>A 30-minute call to understand your workforce, locations, and goals — followed by a tailored proposal and quote.</p>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">2</span>
+          <h3>Plan &amp; Onboard</h3>
+          <p>We design the service mix, set up the on-site clinic, and onboard your team with a simple, branded rollout.</p>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">3</span>
+          <h3>Launch Care</h3>
+          <p>Employees meet their care manager, book first visits, and access telehealth — all from day one.</p>
+        </li>
+        <li class="step">
+          <span class="step-num" aria-hidden="true">4</span>
+          <h3>Measure &amp; Improve</h3>
+          <p>Aggregate, anonymized insights help you target programs where they'll move the needle on workforce health.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" aria-labelledby="gallery-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Inside Anara</span>
+        <h2 id="gallery-title">What care looks like inside the office.</h2>
+      </div>
+      <div class="gallery-grid">
+        <figure class="g-card g-tall">
+          <img src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=900&q=80&auto=format&fit=crop" alt="A doctor and patient during an on-site consultation" width="900" height="900" loading="lazy" decoding="async" />
+          <figcaption>
+            <h3>On-Site Consultations</h3>
+            <p>A doctor visit that fits between meetings.</p>
+          </figcaption>
+        </figure>
+        <figure class="g-card">
+          <img src="https://images.unsplash.com/photo-1612531386530-97286d97c2d2?w=800&q=80&auto=format&fit=crop" alt="Medical professional taking notes during a health screening" width="800" height="600" loading="lazy" decoding="async" />
+          <figcaption>
+            <h3>Annual Health Screenings</h3>
+            <p>Blood work, vitals, and full-body checks at the office.</p>
+          </figcaption>
+        </figure>
+        <figure class="g-card">
+          <img src="https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=800&q=80&auto=format&fit=crop" alt="Care manager coordinating appointments at a desk" width="800" height="600" loading="lazy" decoding="async" />
+          <figcaption>
+            <h3>Care Manager Coordination</h3>
+            <p>One human who owns every appointment.</p>
+          </figcaption>
+        </figure>
+        <figure class="g-card g-tall">
+          <img src="https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?w=900&q=80&auto=format&fit=crop" alt="Person using a smartphone for a telehealth consultation" width="900" height="900" loading="lazy" decoding="async" />
+          <figcaption>
+            <h3>Telehealth, Anywhere</h3>
+            <p>Late-night fever or a quick question — covered.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team" aria-labelledby="team-title">
+    <div class="container grid-2">
+      <div>
+        <span class="eyebrow">Care Team</span>
+        <h2 id="team-title">The people who actually look after your employees.</h2>
+        <p class="section-sub">Every Anara client gets a small, multidisciplinary pod — clinical, coordination, and partner-network access — assigned and accountable.</p>
+      </div>
+      <ul class="team-list">
+        <li><span aria-hidden="true">01</span> Lead Care Manager</li>
+        <li><span aria-hidden="true">02</span> On-Site Clinic Physician</li>
+        <li><span aria-hidden="true">03</span> Telehealth Doctor (24/7)</li>
+        <li><span aria-hidden="true">04</span> Specialist Network Liaison</li>
+        <li><span aria-hidden="true">05</span> Health Coach &amp; Nutritionist</li>
+        <li><span aria-hidden="true">06</span> Account &amp; Onboarding Lead</li>
+      </ul>
+    </div>
+    <div class="container quote-row">
+      <figure class="team-quote">
+        <img src="https://i.pravatar.cc/120?img=68" alt="Rahul Reddy, Founder and CEO of Anara Health" width="120" height="120" loading="lazy" decoding="async" />
+        <blockquote>
+          <p>"We built Anara because corporate healthcare in India shouldn't mean a missed afternoon and a stack of paperwork. Every employee deserves a real care team — on call, on-site, on their side."</p>
+          <footer><strong>Rahul Reddy</strong> · Founder &amp; CEO, Anara Health</footer>
+        </blockquote>
+        <a class="btn btn-outline" href="#cta">Schedule a call <span aria-hidden="true">→</span></a>
+      </figure>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" aria-labelledby="testimonials-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">From the Workforce</span>
+        <h2 id="testimonials-title">What employees say about Anara.</h2>
+      </div>
+      <div class="t-grid">
+        <article class="t-card">
+          <div class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"My spouse had a sudden health scare and my care manager arranged a same-day consult and handled every follow-up. I never had to chase anyone."</p>
+          <footer>
+            <img src="https://i.pravatar.cc/60?img=22" alt="" width="60" height="60" loading="lazy" decoding="async" />
+            <div><strong>Priya S.</strong><span>Engineering Manager</span></div>
+          </footer>
+        </article>
+        <article class="t-card t-card-feature">
+          <div class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"Moving cities wrecked my routine and my numbers were creeping up. Anara's team coached me through diet and exercise — six months later my blood sugar is back in range."</p>
+          <footer>
+            <img src="https://i.pravatar.cc/60?img=14" alt="" width="60" height="60" loading="lazy" decoding="async" />
+            <div><strong>Arjun M.</strong><span>Product Lead</span></div>
+          </footer>
+        </article>
+        <article class="t-card">
+          <div class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"I dropped into the on-site clinic about a stubborn fever. They caught an infection early and had me on the right course of treatment the same day."</p>
+          <footer>
+            <img src="https://i.pravatar.cc/60?img=47" alt="" width="60" height="60" loading="lazy" decoding="async" />
+            <div><strong>Neha R.</strong><span>Sales Director</span></div>
+          </footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="principles" aria-labelledby="principles-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Built for Employers</span>
+        <h2 id="principles-title">How Anara pays back across the business.</h2>
+      </div>
+      <div class="principle-grid">
+        <div class="p-card">
+          <div class="p-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+              <path d="M12 1 v22 M17 5 H9.5 a3.5 3.5 0 0 0 0 7 H14.5 a3.5 3.5 0 0 1 0 7 H7"/>
+            </svg>
+          </div>
+          <h3>Premium Care, Optimized Cost</h3>
+          <p>Negotiated rates with 200+ partners and prevention-first programs lower total spend versus traditional plans.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+              <path d="M16 21 v-2 a4 4 0 0 0-4-4 H6 a4 4 0 0 0-4 4 v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 11 l-3-3 m3 3 l-3 3 m3-3 H15"/>
+            </svg>
+          </div>
+          <h3>Talent Magnet</h3>
+          <p>A benefit candidates actually quote in interviews — and current employees actually use.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+              <path d="M3 17 L9 11 L13 15 L21 7"/>
+              <path d="M14 7 H21 V14"/>
+            </svg>
+          </div>
+          <h3>Productivity Lift</h3>
+          <p>Less absence, faster recovery, fewer half-days lost to off-site doctor visits.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+              <path d="M20.84 4.61 a5.5 5.5 0 0 0-7.78 0 L12 5.67 l-1.06-1.06 a5.5 5.5 0 0 0-7.78 7.78 l1.06 1.06 L12 21.23 l7.78-7.78 1.06-1.06 a5.5 5.5 0 0 0 0-7.78 z"/>
+            </svg>
+          </div>
+          <h3>One Partner, Less Admin</h3>
+          <p>Healthcare, wellness, and provider access — handled by one team, billed on one invoice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">FAQ</span>
+        <h2 id="faq-title">Answers to the questions HR leaders ask first.</h2>
+      </div>
+      <div class="faq-list">
+        <details>
+          <summary><span>What's the minimum contract length?</span><span class="chev" aria-hidden="true"></span></summary>
+          <p>Contracts are flexible. New clients can start with a six-month pilot — including an on-site clinic if relevant — to evaluate fit before a longer commitment.</p>
+        </details>
+        <details>
+          <summary><span>How is employee health data protected?</span><span class="chev" aria-hidden="true"></span></summary>
+          <p>We follow strict data-protection standards aligned with Indian regulations. Individual health information is never shared with the employer — only aggregated, anonymized insights for planning workforce programs.</p>
+        </details>
+        <details>
+          <summary><span>Can we customize the package?</span><span class="chev" aria-hidden="true"></span></summary>
+          <p>Yes — services are modular. Pick on-site clinics, telehealth, second opinions, care coordination, or preventive programs in any combination that fits your workforce.</p>
+        </details>
+        <details>
+          <summary><span>How do you keep pricing competitive on quality care?</span><span class="chev" aria-hidden="true"></span></summary>
+          <p>We negotiate rates with premium providers, including Apollo Hospitals and other top networks, and a dedicated clinical team reviews recommendations to avoid unnecessary procedures.</p>
+        </details>
+        <details>
+          <summary><span>Can employees see doctors outside the Anara network?</span><span class="chev" aria-hidden="true"></span></summary>
+          <p>Yes. We recommend the in-network providers for the best quality-to-cost balance, but the concierge team will coordinate care with outside doctors when an employee prefers.</p>
+        </details>
+        <details>
+          <summary><span>How does the total cost compare to traditional corporate plans?</span><span class="chev" aria-hidden="true"></span></summary>
+          <p>For most clients, the all-in cost lands at or below traditional plans — driven by negotiated rates, prevention, and clinically reviewed care plans that avoid unnecessary spend.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta" class="cta" aria-labelledby="cta-title">
+    <div class="container cta-inner">
+      <h2 id="cta-title">Elevate your employee health benefits today.</h2>
+      <p>Book a 30-minute consult with our team — we'll scope a plan tailored to your workforce, locations, and goals.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="mailto:Sales@anara.health">Schedule a Call with Rahul <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost-light" href="mailto:Sales@anara.health">Email Sales</a>
+      </div>
+      <div class="cta-contact">
+        <a href="mailto:Sales@anara.health">Sales@anara.health</a>
+        <span aria-hidden="true">·</span>
+        <a href="tel:+18448826272">+1 (844) 882-6272</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://wa.me/919056332891" rel="noopener">WhatsApp +91 90563 32891</a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="contact" class="footer">
+    <div class="container footer-grid">
+      <div class="f-brand">
+        <a class="brand" href="./anara.html" aria-label="Anara Health home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+              <path d="M16 4 L28 26 H4 Z"/>
+              <path d="M11 26 L16 14 L21 26"/>
+            </svg>
+          </span>
+          <span class="brand-name">Anara Health</span>
+        </a>
+        <p>Concierge healthcare, on-site clinics, and telehealth — purpose-built for Indian corporates.</p>
+        <div class="socials" aria-label="Social links">
+          <a href="https://www.facebook.com/" aria-label="Anara on Facebook" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" focusable="false" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3H13.5V8.6c0-.9.25-1.5 1.55-1.5H16.5V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.5v3h2.3V21h3.7z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" aria-label="Anara on Instagram" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/" aria-label="Anara on LinkedIn" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" focusable="false" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.36 0h4.37v1.92h.06c.61-1.15 2.1-2.36 4.33-2.36 4.63 0 5.49 3.05 5.49 7.02V22h-4.57v-6.59c0-1.57-.03-3.6-2.2-3.6-2.2 0-2.54 1.72-2.54 3.49V22H7.58V8z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="f-col">
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="#services">On-Site Clinics</a></li>
+          <li><a href="#services">Telemedicine</a></li>
+          <li><a href="#services">Second Opinion</a></li>
+          <li><a href="#services">Care Coordination</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#why">Why Anara</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#cta">Book a Call</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:Sales@anara.health">Sales@anara.health</a></li>
+          <li><a href="tel:+18448826272">+1 (844) 882-6272</a></li>
+          <li><a href="https://wa.me/919056332891" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container f-base">
+      <span>© 2026 Anara Health. All rights reserved.</span>
+      <span><a href="#">Terms</a> · <a href="#">Privacy</a></span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

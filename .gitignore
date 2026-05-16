@@ -1,0 +1,19 @@
+# Local tooling
+.claude/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies (just in case)
+node_modules/
