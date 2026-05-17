@@ -1,0 +1,1168 @@
+/* ============================================================
+   Anara — Premium Glass Layer (v3)
+   Loads AFTER anara-v2.css. The authoritative premium design.
+
+   Reference frame: Apple Liquid Glass (iOS 26 / visionOS),
+   Linear app shell, Vercel Geist, Stripe Mesh.
+
+   Six premium pillars enforced here:
+   1. Multi-layer glass material (tint + blur + saturation + grain + edge + shadow)
+   2. Consistent light source (upper-left rim light across every surface)
+   3. Chromatic edge refraction (conic-gradient borders + SVG displacement filter hooks)
+   4. Display typography (Fraunces Display via opsz + Geist Sans body)
+   5. Palette discipline (5 colours, accent as punctuation)
+   6. Section rhythm (160-240px desktop vertical breathing)
+   ============================================================ */
+
+
+/* ============ Premium tokens ============ */
+.anara.v2-glass {
+  /* Type — Geist for body (replaces Inter), Fraunces stays for display */
+  --sans: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --serif: "Fraunces", "GT Sectra Display", Georgia, "Times New Roman", serif;
+  --mono: "Geist Mono", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Compressed palette — 5 colours, accent is punctuation */
+  --pg-bg: #FAF7FF;                  /* page lavender-tinted off-white */
+  --pg-surface: #FFFFFF;             /* solid card fallback */
+  --pg-ink: #14062B;                 /* primary text, never pure black */
+  --pg-ink-soft: rgba(20,6,43,0.62); /* secondary text */
+  --pg-ink-quiet: rgba(20,6,43,0.42);/* tertiary text */
+  --pg-line: rgba(20,6,43,0.08);     /* hairlines */
+  --pg-line-strong: rgba(20,6,43,0.16);
+  --pg-accent: #8E108C;              /* purple — single accent, punctuation only */
+  --pg-accent-deep: #6C0C69;
+  --pg-accent-soft: rgba(142,16,140,0.08);
+  --pg-gold: #C9A56C;                /* second voice — focus rings, badges */
+
+  /* Spring physics tokens (stiffness/damping translated to bezier) */
+  --spring-soft: cubic-bezier(0.34, 1.32, 0.64, 1);    /* mild overshoot, UI default */
+  --spring-firm: cubic-bezier(0.22, 1, 0.36, 1);       /* fast settle, no overshoot */
+  --spring-elastic: cubic-bezier(0.32, 1.72, 0.64, 1); /* pronounced bounce, playful */
+  --motion-fast: 180ms;
+  --motion-base: 280ms;
+  --motion-slow: 480ms;
+
+  /* Glass tint levels — 7 stops, designed to layer */
+  --glass-02: rgba(255,255,255,0.02);
+  --glass-08: rgba(255,255,255,0.08);
+  --glass-18: rgba(255,255,255,0.18);
+  --glass-32: rgba(255,255,255,0.32);
+  --glass-48: rgba(255,255,255,0.48);
+  --glass-68: rgba(255,255,255,0.68);
+  --glass-88: rgba(255,255,255,0.88);
+
+  /* Backdrop recipes — paired blur + saturation + contrast (the premium combo) */
+  --backdrop-soft: blur(28px) saturate(180%) brightness(1.04);
+  --backdrop-firm: blur(48px) saturate(200%) brightness(1.06);
+  --backdrop-hero: blur(72px) saturate(220%) brightness(1.08) contrast(1.02);
+
+  /* Multi-layer shadow scale — premium = 3 stops, never 1 */
+  --pg-shadow-1:
+    0 1px 1px rgba(20,6,43,0.04),
+    0 1px 2px rgba(20,6,43,0.04);
+  --pg-shadow-2:
+    0 1px 2px rgba(20,6,43,0.05),
+    0 6px 12px -4px rgba(20,6,43,0.08),
+    0 16px 32px -16px rgba(20,6,43,0.10);
+  --pg-shadow-3:
+    0 1px 2px rgba(20,6,43,0.06),
+    0 8px 16px -8px rgba(20,6,43,0.10),
+    0 24px 48px -16px rgba(20,6,43,0.14),
+    0 56px 96px -32px rgba(142,16,140,0.16);
+  --pg-shadow-4-hero:
+    0 1px 2px rgba(20,6,43,0.08),
+    0 12px 24px -8px rgba(20,6,43,0.14),
+    0 40px 80px -24px rgba(20,6,43,0.20),
+    0 96px 160px -48px rgba(142,16,140,0.22);
+
+  /* Inner highlights — universal upper-left light source */
+  --rim-light-top:
+    inset 0 1px 0 rgba(255,255,255,0.55),
+    inset 1px 0 0 rgba(255,255,255,0.22);
+  --rim-light-bottom:
+    inset 0 -1px 0 rgba(20,6,43,0.04),
+    inset -1px 0 0 rgba(20,6,43,0.02);
+
+  /* Section rhythm — premium = generous */
+  --section-pad: clamp(120px, 14vw, 200px);
+  --section-pad-sm: clamp(80px, 10vw, 140px);
+
+  /* Container widths */
+  --c-narrow: 920px;
+  --c-data: 1100px;
+  --c-default: 1240px;
+}
+
+
+/* ============ Geist font load ============ */
+/* Via cdn.jsdelivr.net (Vercel ships Geist on jsdelivr with @font-face) */
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@fontsource-variable/geist@5/files/geist-latin-wght-normal.woff2") format("woff2-variations");
+}
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@fontsource-variable/geist-mono@5/files/geist-mono-latin-wght-normal.woff2") format("woff2-variations");
+}
+
+
+/* ============ Body canvas — multi-stop iridescent mesh ============ */
+/* Why: Stripe-class atmospheric backdrop without WebGL. 5 layered radials drift slowly. */
+body.anara.v2-glass {
+  background:
+    radial-gradient(ellipse 80% 60% at 12% 4%,   rgba(142,16,140,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 80% at 96% 18%,  rgba(201,165,108,0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 90% 50% at 50% 50%,  rgba(220,180,240,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 70% at 4% 80%,   rgba(108,12,105,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 60% at 100% 96%, rgba(142,16,140,0.10) 0%, transparent 55%),
+    linear-gradient(168deg, #FDFAFF 0%, #F6EEFF 50%, #FAF4FF 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* Film grain overlay — 1% opacity SVG noise, fixed to viewport */
+body.anara.v2-glass::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.02 0 0 0 0 0.18 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+body.anara.v2-glass > * { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  body.anara.v2-glass { background-attachment: scroll; }
+}
+
+
+/* ============ Premium glass material (override .g-glass-card) ============ */
+/* Why: 6-layer Liquid Glass — tint + blur + saturation + rim light + chromatic edge + multi-shadow */
+.anara.v2-glass .g-glass-card {
+  background: var(--glass-48);
+  backdrop-filter: var(--backdrop-firm);
+  -webkit-backdrop-filter: var(--backdrop-firm);
+  border: 1px solid transparent;
+  border-radius: 24px;
+  box-shadow:
+    var(--rim-light-top),
+    var(--rim-light-bottom),
+    var(--pg-shadow-3);
+  position: relative;
+  isolation: isolate;
+  transition:
+    transform var(--motion-base) var(--spring-soft),
+    box-shadow var(--motion-base) var(--spring-firm),
+    background var(--motion-base) var(--spring-firm);
+}
+
+/* Chromatic edge — conic gradient border revealed on hover via mask */
+.anara.v2-glass .g-glass-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from 135deg at 50% 50%,
+    rgba(142,16,140,0.6),
+    rgba(201,165,108,0.4),
+    rgba(255,255,255,0.65),
+    rgba(108,12,105,0.5),
+    rgba(142,16,140,0.6)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  transition: opacity var(--motion-base) var(--spring-firm);
+  pointer-events: none;
+}
+.anara.v2-glass .g-glass-card:hover::before { opacity: 1; }
+
+/* Cursor light trail (replaces old uniform glow) */
+.anara.v2-glass .g-glass-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    280px circle at var(--mx, -200px) var(--my, -200px),
+    rgba(255,255,255,0.42) 0%,
+    rgba(201,165,108,0.18) 28%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--spring-firm);
+  pointer-events: none;
+}
+.anara.v2-glass .g-glass-card:hover::after { opacity: 1; }
+
+.anara.v2-glass .g-glass-card:hover {
+  transform: translateY(-4px);
+  background: var(--glass-68);
+  box-shadow:
+    var(--rim-light-top),
+    var(--rim-light-bottom),
+    var(--pg-shadow-4-hero);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anara.v2-glass .g-glass-card,
+  .anara.v2-glass .g-glass-card:hover {
+    transform: none;
+    transition: none;
+  }
+  .anara.v2-glass .g-glass-card::after { display: none; }
+}
+
+
+/* ============ Display typography polish ============ */
+/* Why: bigger, tighter, more confident. Premium = type IS the architecture. */
+.anara.v2-glass {
+  font-family: var(--sans);
+  font-feature-settings: "ss01", "cv01", "cv11";
+  letter-spacing: -0.005em;
+  color: var(--pg-ink);
+}
+
+.anara.v2-glass h1,
+.anara.v2-glass .h1 h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  font-variation-settings: "opsz" 144;
+  margin: 18px 0 26px;
+  max-width: 16ch;
+}
+
+.anara.v2-glass h2,
+.anara.v2-glass .section-head h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(36px, 4.4vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  font-variation-settings: "opsz" 96;
+  color: var(--pg-ink);
+}
+
+.anara.v2-glass h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(20px, 1.6vw, 24px);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.anara.v2-glass .eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pg-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.anara.v2-glass .eyebrow::before {
+  content: "";
+  width: 20px;
+  height: 1px;
+  background: var(--pg-accent);
+  display: inline-block;
+}
+
+.anara.v2-glass .lede,
+.anara.v2-glass .section-sub {
+  font-family: var(--sans);
+  font-size: clamp(17px, 1.4vw, 19px);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: var(--pg-ink-soft);
+  max-width: 56ch;
+}
+
+
+/* ============ Section rhythm — premium vertical breathing ============ */
+.anara.v2-glass main > section,
+.anara.v2-glass main > .g-section {
+  padding-top: var(--section-pad);
+  padding-bottom: var(--section-pad);
+}
+.anara.v2-glass .g-trust-strip,
+.anara.v2-glass .g-stats-band,
+.anara.v2-glass .g-compliance-strip,
+.anara.v2-glass .g-press-strip {
+  padding-top: var(--section-pad-sm);
+  padding-bottom: var(--section-pad-sm);
+}
+
+
+/* ============ Premium buttons (magnetic + glass) ============ */
+.anara.v2-glass .btn {
+  font-family: var(--sans);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  padding: 14px 24px;
+  min-height: 48px;
+  transition:
+    transform var(--motion-base) var(--spring-elastic),
+    box-shadow var(--motion-base) var(--spring-firm),
+    background var(--motion-base) var(--spring-firm),
+    color var(--motion-fast) var(--spring-firm);
+  will-change: transform;
+}
+
+.anara.v2-glass .btn-primary {
+  background: linear-gradient(180deg, var(--pg-accent) 0%, var(--pg-accent-deep) 100%);
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    inset 0 -1px 0 rgba(0,0,0,0.16),
+    0 1px 2px rgba(20,6,43,0.10),
+    0 8px 18px -6px rgba(142,16,140,0.45),
+    0 24px 48px -16px rgba(142,16,140,0.30);
+}
+.anara.v2-glass .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.32),
+    inset 0 -1px 0 rgba(0,0,0,0.18),
+    0 1px 2px rgba(20,6,43,0.12),
+    0 12px 24px -6px rgba(142,16,140,0.55),
+    0 32px 64px -16px rgba(142,16,140,0.40);
+}
+
+/* Shimmer sweep on primary CTA */
+.anara.v2-glass .btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg,
+    transparent 30%,
+    rgba(255,255,255,0.4) 50%,
+    transparent 70%);
+  transform: translateX(-150%);
+  transition: transform 700ms var(--spring-firm);
+  pointer-events: none;
+}
+.anara.v2-glass .btn-primary:hover::before { transform: translateX(150%); }
+
+.anara.v2-glass .btn-ghost,
+.anara.v2-glass .btn-outline {
+  background: var(--glass-48);
+  backdrop-filter: var(--backdrop-soft);
+  -webkit-backdrop-filter: var(--backdrop-soft);
+  color: var(--pg-ink);
+  border: 1px solid var(--pg-line-strong);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    0 1px 2px rgba(20,6,43,0.04);
+}
+.anara.v2-glass .btn-ghost:hover,
+.anara.v2-glass .btn-outline:hover {
+  background: var(--glass-68);
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.55),
+    0 8px 18px -6px rgba(20,6,43,0.12);
+}
+
+/* Magnetic hook (set by JS) */
+.anara.v2-glass .btn-magnetic {
+  --mag-x: 0px;
+  --mag-y: 0px;
+}
+.anara.v2-glass .btn-magnetic > * {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transform: translate3d(calc(var(--mag-x) * 0.45), calc(var(--mag-y) * 0.45), 0);
+  transition: transform var(--motion-fast) var(--spring-firm);
+}
+.anara.v2-glass .btn-magnetic:hover {
+  transform: translate3d(calc(var(--mag-x) * 0.25), calc(var(--mag-y) * 0.25), 0) translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anara.v2-glass .btn,
+  .anara.v2-glass .btn-magnetic,
+  .anara.v2-glass .btn-magnetic > * {
+    transform: none !important;
+    transition: none;
+  }
+  .anara.v2-glass .btn-primary::before { display: none; }
+}
+
+
+/* ============ Hero upgrade ============ */
+.anara.v2-glass .h1 {
+  position: relative;
+  padding: clamp(80px, 10vw, 140px) 0 var(--section-pad);
+  overflow: hidden;
+}
+
+.anara.v2-glass .h1 .copy {
+  position: relative;
+  z-index: 2;
+}
+
+.anara.v2-glass .h1 h1 em {
+  font-style: italic;
+  color: var(--pg-accent);
+  font-weight: 500;
+  position: relative;
+}
+
+/* Photo stack — premium frame system */
+.anara.v2-glass .h1 .stack {
+  position: relative;
+  aspect-ratio: 4 / 5;
+}
+.anara.v2-glass .h1 .stack img {
+  position: absolute;
+  border-radius: 24px;
+  object-fit: cover;
+  border: 8px solid rgba(255,255,255,0.85);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    var(--pg-shadow-3);
+  filter: saturate(0.92) contrast(1.04);
+  transition: transform var(--motion-slow) var(--spring-soft);
+}
+.anara.v2-glass .h1 .stack img:hover { transform: scale(1.02) rotate(0deg) !important; }
+.anara.v2-glass .h1 .stack img:nth-child(1) {
+  top: 0; right: 0;
+  width: 64%; height: 56%;
+  transform: rotate(2.2deg);
+  z-index: 1;
+}
+.anara.v2-glass .h1 .stack img:nth-child(2) {
+  bottom: 18%; left: 0;
+  width: 64%; height: 56%;
+  transform: rotate(-3.2deg);
+  z-index: 2;
+}
+.anara.v2-glass .h1 .stack img:nth-child(3) {
+  bottom: 0; right: 4%;
+  width: 58%; height: 48%;
+  transform: rotate(1.2deg);
+  z-index: 1;
+}
+
+.anara.v2-glass .h1 .live-pill {
+  position: absolute;
+  bottom: 8%;
+  right: -10px;
+  z-index: 4;
+  background: var(--glass-88);
+  backdrop-filter: var(--backdrop-firm);
+  -webkit-backdrop-filter: var(--backdrop-firm);
+  border-radius: 999px;
+  padding: 10px 18px 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--pg-ink);
+  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow:
+    var(--rim-light-top),
+    0 1px 2px rgba(20,6,43,0.06),
+    0 12px 28px -8px rgba(142,16,140,0.30);
+}
+.anara.v2-glass .h1 .live-pill .pulse {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #15803D;
+  box-shadow: 0 0 0 4px rgba(21,128,61,0.22);
+  animation: pulse-soft 2s var(--spring-firm) infinite;
+}
+@keyframes pulse-soft {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(21,128,61,0.22); }
+  50%      { box-shadow: 0 0 0 6px rgba(21,128,61,0.0); }
+}
+
+
+/* ============ Logo wall — monochrome (CRITICAL trust signal) ============ */
+.anara.v2-glass .g-logo-wall {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  justify-content: center;
+  margin: clamp(28px, 4vw, 48px) 0 0;
+  padding: 24px 0;
+  border-top: 1px solid var(--pg-line);
+}
+.anara.v2-glass .g-logo-wall li { list-style: none; }
+.anara.v2-glass .g-logo-wall .logo {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--pg-ink-soft);
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  opacity: 0.6;
+  filter: grayscale(100%);
+  transition: opacity var(--motion-base) var(--spring-firm), filter var(--motion-base) var(--spring-firm);
+}
+.anara.v2-glass .g-logo-wall .logo:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+.anara.v2-glass .g-logo-wall img,
+.anara.v2-glass .g-logo-wall svg {
+  height: 32px;
+  width: auto;
+  display: block;
+  filter: grayscale(100%) brightness(0.6);
+  opacity: 0.7;
+  transition: filter var(--motion-base) var(--spring-firm), opacity var(--motion-base) var(--spring-firm);
+}
+.anara.v2-glass .g-logo-wall img:hover,
+.anara.v2-glass .g-logo-wall svg:hover {
+  filter: grayscale(0%) brightness(1);
+  opacity: 1;
+}
+
+
+/* ============ Compliance badges strip ============ */
+.anara.v2-glass .g-compliance-strip {
+  background: linear-gradient(180deg, rgba(252,248,255,0.4), rgba(252,248,255,0.8));
+  border-top: 1px solid var(--pg-line);
+  border-bottom: 1px solid var(--pg-line);
+}
+.anara.v2-glass .g-compliance-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  text-align: center;
+}
+.anara.v2-glass .g-compliance-label {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pg-ink-quiet);
+  font-weight: 600;
+}
+.anara.v2-glass .g-compliance-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+.anara.v2-glass .g-compliance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px 10px 14px;
+  background: var(--glass-68);
+  backdrop-filter: var(--backdrop-soft);
+  -webkit-backdrop-filter: var(--backdrop-soft);
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--pg-ink);
+  box-shadow:
+    var(--rim-light-top),
+    0 1px 2px rgba(20,6,43,0.04),
+    0 8px 18px -10px rgba(20,6,43,0.10);
+  transition:
+    transform var(--motion-base) var(--spring-soft),
+    box-shadow var(--motion-base) var(--spring-firm);
+}
+.anara.v2-glass .g-compliance-badge:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    var(--rim-light-top),
+    0 1px 2px rgba(20,6,43,0.06),
+    0 16px 32px -12px rgba(142,16,140,0.24);
+}
+.anara.v2-glass .g-compliance-badge .b-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--pg-accent), var(--pg-accent-deep));
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.anara.v2-glass .g-compliance-badge.is-gold .b-icon {
+  background: linear-gradient(135deg, var(--pg-gold), #B58D52);
+}
+.anara.v2-glass .g-compliance-badge small {
+  display: block;
+  font-size: 11px;
+  color: var(--pg-ink-soft);
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+
+/* ============ Press strip ============ */
+.anara.v2-glass .g-press-strip {
+  background: transparent;
+}
+.anara.v2-glass .g-press-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.anara.v2-glass .g-press-label {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pg-ink-quiet);
+  font-weight: 600;
+}
+.anara.v2-glass .g-press-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  justify-content: center;
+}
+.anara.v2-glass .g-press-row .press-logo {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--pg-ink-quiet);
+  letter-spacing: -0.01em;
+  opacity: 0.5;
+  filter: grayscale(100%);
+  transition: opacity var(--motion-base) var(--spring-firm);
+}
+.anara.v2-glass .g-press-row .press-logo:hover { opacity: 0.9; }
+
+
+/* ============ Pricing tier table (3-tier) ============ */
+.anara.v2-glass .g-pricing-tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: var(--c-data);
+  margin: clamp(36px, 5vw, 56px) auto 0;
+}
+.anara.v2-glass .g-tier {
+  background: var(--glass-48);
+  backdrop-filter: var(--backdrop-firm);
+  -webkit-backdrop-filter: var(--backdrop-firm);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 24px;
+  padding: clamp(28px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  box-shadow:
+    var(--rim-light-top),
+    var(--rim-light-bottom),
+    var(--pg-shadow-2);
+  transition:
+    transform var(--motion-base) var(--spring-soft),
+    box-shadow var(--motion-base) var(--spring-firm);
+}
+.anara.v2-glass .g-tier:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    var(--rim-light-top),
+    var(--rim-light-bottom),
+    var(--pg-shadow-3);
+}
+.anara.v2-glass .g-tier.is-featured {
+  background: linear-gradient(180deg, rgba(142,16,140,0.96) 0%, rgba(74,11,107,0.96) 100%);
+  color: #fff;
+  border-color: rgba(201,165,108,0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    0 1px 2px rgba(20,6,43,0.12),
+    0 24px 56px -16px rgba(142,16,140,0.45),
+    0 56px 96px -24px rgba(142,16,140,0.30);
+  transform: translateY(-12px);
+}
+.anara.v2-glass .g-tier.is-featured:hover { transform: translateY(-18px); }
+.anara.v2-glass .g-tier.is-featured::before {
+  content: "RECOMMENDED";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--pg-gold);
+  color: var(--pg-ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 6px 14px;
+  border-radius: 999px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.4),
+    0 4px 12px -2px rgba(201,165,108,0.5);
+}
+.anara.v2-glass .g-tier-name {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pg-accent);
+}
+.anara.v2-glass .g-tier.is-featured .g-tier-name { color: var(--pg-gold); }
+.anara.v2-glass .g-tier-price {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(36px, 4.4vw, 52px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--pg-ink);
+  margin: 4px 0;
+}
+.anara.v2-glass .g-tier.is-featured .g-tier-price { color: #fff; }
+.anara.v2-glass .g-tier-price sub {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--pg-ink-soft);
+  vertical-align: baseline;
+  margin-left: 6px;
+}
+.anara.v2-glass .g-tier.is-featured .g-tier-price sub { color: rgba(255,255,255,0.7); }
+.anara.v2-glass .g-tier-blurb {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--pg-ink-soft);
+  margin: 0 0 16px;
+}
+.anara.v2-glass .g-tier.is-featured .g-tier-blurb { color: rgba(255,255,255,0.84); }
+.anara.v2-glass .g-tier-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  flex: 1;
+}
+.anara.v2-glass .g-tier-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.anara.v2-glass .g-tier-list svg {
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--pg-accent);
+}
+.anara.v2-glass .g-tier.is-featured .g-tier-list svg { color: var(--pg-gold); }
+.anara.v2-glass .g-tier-cta {
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+@media (max-width: 960px) {
+  .anara.v2-glass .g-pricing-tiers {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+  }
+  .anara.v2-glass .g-tier.is-featured { transform: none; }
+  .anara.v2-glass .g-tier.is-featured:hover { transform: translateY(-4px); }
+}
+
+
+/* ============ Portrait placeholder system (premium) ============ */
+/* Why: until real photography arrives, abstract gradient + monogram reads as intentional design,
+   not "missing image." Replace src= with real photo when ready. */
+.anara.v2-glass .g-portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.4) 0%, transparent 50%),
+    linear-gradient(160deg, var(--p-bg-a, #8E108C) 0%, var(--p-bg-b, #4A0B6B) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    inset 0 -1px 0 rgba(0,0,0,0.2),
+    var(--pg-shadow-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.anara.v2-glass .g-portrait::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.anara.v2-glass .g-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.anara.v2-glass .g-portrait .monogram {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(72px, 8vw, 120px);
+  letter-spacing: -0.04em;
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+.anara.v2-glass .g-portrait .placeholder-tag {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  font-weight: 600;
+  z-index: 2;
+}
+
+/* Portrait variants */
+.anara.v2-glass .g-portrait--a { --p-bg-a: #8E108C; --p-bg-b: #4A0B6B; }
+.anara.v2-glass .g-portrait--b { --p-bg-a: #6C0C69; --p-bg-b: #2A0E3F; }
+.anara.v2-glass .g-portrait--c { --p-bg-a: #B97DC7; --p-bg-b: #5B0E59; }
+.anara.v2-glass .g-portrait--d { --p-bg-a: #C9A56C; --p-bg-b: #6C0C69; }
+
+
+/* ============ Founder portrait block (premium upgrade to founder quote) ============ */
+.anara.v2-glass .g-founder-block {
+  max-width: var(--c-data);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.42fr 0.58fr;
+  gap: clamp(40px, 5vw, 80px);
+  align-items: center;
+}
+.anara.v2-glass .g-founder-block .g-portrait {
+  max-width: 420px;
+}
+.anara.v2-glass .g-founder-block blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.32;
+  letter-spacing: -0.02em;
+  color: var(--pg-ink);
+  font-weight: 400;
+  font-variation-settings: "opsz" 72;
+  text-wrap: balance;
+}
+.anara.v2-glass .g-founder-block blockquote::before {
+  content: "\201C";
+  font-family: var(--serif);
+  font-size: clamp(72px, 9vw, 120px);
+  line-height: 0.7;
+  color: var(--pg-accent);
+  opacity: 0.32;
+  display: block;
+  margin-bottom: -8px;
+  font-weight: 500;
+}
+.anara.v2-glass .g-founder-block .g-founder-cite {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: clamp(20px, 2.4vw, 32px);
+  padding-top: clamp(20px, 2.4vw, 32px);
+  border-top: 1px solid var(--pg-line);
+}
+.anara.v2-glass .g-founder-block .g-founder-cite strong {
+  display: block;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--pg-ink);
+  letter-spacing: -0.01em;
+}
+.anara.v2-glass .g-founder-block .g-founder-cite span {
+  display: block;
+  font-size: 13px;
+  color: var(--pg-ink-soft);
+  margin-top: 2px;
+}
+.anara.v2-glass .g-founder-block .g-founder-cite a {
+  margin-left: auto;
+  color: var(--pg-accent);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+@media (max-width: 880px) {
+  .anara.v2-glass .g-founder-block {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .anara.v2-glass .g-founder-block .g-portrait { max-width: 360px; margin: 0 auto; }
+}
+
+
+/* ============ Team photo grid (premium upgrade) ============ */
+.anara.v2-glass .g-team-photos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: clamp(32px, 4vw, 56px);
+}
+.anara.v2-glass .g-team-photo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.anara.v2-glass .g-team-photo .g-portrait {
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+}
+.anara.v2-glass .g-team-photo .g-portrait .monogram {
+  font-size: clamp(40px, 5vw, 64px);
+}
+.anara.v2-glass .g-team-photo h4 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 17px;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.anara.v2-glass .g-team-photo p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.72);
+  margin: 0;
+}
+
+@media (max-width: 880px) {
+  .anara.v2-glass .g-team-photos { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .anara.v2-glass .g-team-photos { grid-template-columns: 1fr; max-width: 320px; margin-left: auto; margin-right: auto; }
+}
+
+
+/* ============ Named testimonial cards (replace anonymous) ============ */
+.anara.v2-glass .g-tc-named {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: clamp(36px, 4vw, 56px);
+}
+.anara.v2-glass .g-tc-named .g-tc-card {
+  background: var(--glass-68);
+  backdrop-filter: var(--backdrop-firm);
+  -webkit-backdrop-filter: var(--backdrop-firm);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow:
+    var(--rim-light-top),
+    var(--rim-light-bottom),
+    var(--pg-shadow-2);
+  transition: transform var(--motion-base) var(--spring-soft),
+              box-shadow var(--motion-base) var(--spring-firm);
+}
+.anara.v2-glass .g-tc-named .g-tc-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    var(--rim-light-top),
+    var(--rim-light-bottom),
+    var(--pg-shadow-3);
+}
+.anara.v2-glass .g-tc-named blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--pg-ink);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.anara.v2-glass .g-tc-named .g-tc-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--pg-line);
+}
+.anara.v2-glass .g-tc-named .g-tc-meta .g-portrait {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  flex-shrink: 0;
+}
+.anara.v2-glass .g-tc-named .g-tc-meta .g-portrait .monogram {
+  font-size: 22px;
+}
+.anara.v2-glass .g-tc-named .g-tc-meta strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pg-ink);
+  letter-spacing: -0.005em;
+}
+.anara.v2-glass .g-tc-named .g-tc-meta span {
+  display: block;
+  font-size: 12px;
+  color: var(--pg-ink-soft);
+}
+.anara.v2-glass .g-tc-named .g-tc-stat {
+  background: var(--pg-accent-soft);
+  color: var(--pg-accent);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  align-self: flex-start;
+}
+
+@media (max-width: 880px) {
+  .anara.v2-glass .g-tc-named { grid-template-columns: 1fr; max-width: 540px; margin-left: auto; margin-right: auto; }
+}
+
+
+/* ============ Floating spotlight (dark section enhancement) ============ */
+.anara.v2-glass .g-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+.anara.v2-glass .g-spotlight::before {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(201,165,108,0.18) 0%, transparent 65%);
+  top: var(--sl-y, 0);
+  left: var(--sl-x, 0);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--spring-firm);
+}
+.anara.v2-glass .g-spotlight:hover::before { opacity: 1; }
+.anara.v2-glass .g-spotlight > * { position: relative; z-index: 1; }
+
+
+/* ============ Hero credential pills (refined) ============ */
+.anara.v2-glass .h1 .trust-row .label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pg-ink-quiet);
+}
+
+
+/* ============ Nav refinement ============ */
+.anara.v2-glass .nav-wrap {
+  background: rgba(252,248,255,0.6);
+  backdrop-filter: var(--backdrop-soft);
+  -webkit-backdrop-filter: var(--backdrop-soft);
+  border-bottom: 1px solid transparent;
+  transition: background var(--motion-base), border-color var(--motion-base);
+}
+.anara.v2-glass .nav-wrap[data-scrolled] {
+  background: rgba(252,248,255,0.85);
+  border-bottom-color: var(--pg-line);
+}
+
+
+/* ============ Scroll progress bar (gold-purple gradient) ============ */
+.anara.v2-glass .scroll-progress {
+  background: rgba(20,6,43,0.04);
+}
+.anara.v2-glass .scroll-progress > i {
+  background: linear-gradient(90deg, var(--pg-accent) 0%, var(--pg-gold) 100%);
+  box-shadow: 0 0 16px rgba(142,16,140,0.5);
+}
+
+
+/* ============ FAB premium polish ============ */
+.anara.v2-glass .g-fab a {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 12px 32px -8px rgba(20,6,43,0.40),
+    0 24px 48px -16px rgba(142,16,140,0.30);
+  transition: transform var(--motion-base) var(--spring-elastic),
+              box-shadow var(--motion-base) var(--spring-firm);
+}
+.anara.v2-glass .g-fab a:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.32),
+    0 16px 40px -8px rgba(20,6,43,0.50),
+    0 32px 64px -16px rgba(142,16,140,0.42);
+}
+
+
+/* ============ Focus rings — gold, never removed ============ */
+.anara.v2-glass *:focus-visible {
+  outline: 2px solid var(--pg-gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+
+/* ============ Reduced motion ============ */
+@media (prefers-reduced-motion: reduce) {
+  body.anara.v2-glass::before { display: none; }
+  .anara.v2-glass .h1 .live-pill .pulse { animation: none; }
+  .anara.v2-glass .h1 .stack img,
+  .anara.v2-glass .h1 .stack img:hover {
+    transform: none;
+    transition: none;
+  }
+  .anara.v2-glass .g-portrait::before { display: none; }
+}

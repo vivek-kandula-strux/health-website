@@ -17,3 +17,4 @@ desktop.ini
 
 # Dependencies (just in case)
 node_modules/
+.gstack/
