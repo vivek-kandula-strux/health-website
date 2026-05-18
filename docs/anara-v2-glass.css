@@ -636,8 +636,34 @@ h3, .h3 {
 }
 .fc-sub { font-size: 11px; color: var(--ink-2); }
 
+/* Mobile float cards — same drift-in concept, scaled down + repositioned
+   so they cluster around the photo instead of spilling into copy. */
 @media (max-width: 880px) {
-  .float-cards { display: none; }
+  .float-cards { display: block; }
+  .float-card--wa {
+    top: 4%; left: 0%;
+    width: clamp(154px, 46vw, 196px);
+  }
+  .float-card--lab {
+    top: 42%; right: 0%;
+    width: clamp(150px, 44vw, 192px);
+  }
+  .float-card--stat {
+    bottom: -2%; left: 8%;
+    width: clamp(132px, 38vw, 168px);
+  }
+}
+@media (max-width: 600px) {
+  .float-card { padding: 9px 11px; font-size: 11px; }
+  .float-card--wa  { top: 2%;  left: -2%; }
+  .float-card--lab { top: 40%; right: -2%; }
+  .float-card--stat { bottom: -4%; left: 4%; }
+  .fc-msg { font-size: 11.5px; }
+  .fc-value { font-size: 16px; }
+  .fc-big { font-size: 32px; }
+  .fc-big em { font-size: 14px; }
+  .fc-avatar { width: 22px; height: 22px; font-size: 11px; }
+  .fc-meta strong { font-size: 10.5px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .float-card {
