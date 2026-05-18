@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pricing — Anara (extracted component)</title>
+<!--
+  EXTRACTED FROM: anara-v2-glass.html
+  DATE: 2026-05-18
+
+  This file preserves the pricing section so it can be re-inserted later.
+  It includes:
+    1. The exact <section id="pricing"> markup (search "BEGIN PRICING HTML")
+    2. The exact CSS block (search "BEGIN PRICING CSS")
+    3. The minimum design tokens needed to render this file standalone
+
+  TO RE-INSERT INTO MAIN PAGE:
+    - Paste the <section id="pricing">…</section> back into anara-v2-glass.html
+      (originally between the Process section and Trust block).
+    - Paste the "/* ============ Pricing tiers ============ */" CSS block
+      back into anara-v2-glass.css (originally between Process and
+      Founder + Testimonials blocks).
+    - Restore nav link, footer link, and the hero "How we structure" button
+      that point to #pricing.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" />
+<style>
+  /* ---- Minimal tokens (copied from anara-v2-glass.css so this file renders standalone) ---- */
+  :root {
+    --purple: #5B1A8B;
+    --purple-deep: #3D0F66;
+    --gold: #C9A56C;
+    --gold-deep: #A68552;
+    --ink: #1A0F2E;
+    --ink-2: rgba(26, 15, 46, 0.72);
+    --ink-3: rgba(26, 15, 46, 0.52);
+    --cream: #FAF7F2;
+    --surface: #FFFFFF;
+    --line: rgba(26, 15, 46, 0.08);
+
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, sans-serif;
+
+    --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+    --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+    --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px; --r-pill: 999px;
+
+    --shadow-1: 0 1px 2px rgba(26, 15, 46, 0.04);
+    --shadow-2: 0 1px 2px rgba(26, 15, 46, 0.06), 0 8px 20px -8px rgba(26, 15, 46, 0.10);
+    --shadow-3: 0 1px 2px rgba(26, 15, 46, 0.08), 0 12px 32px -12px rgba(26, 15, 46, 0.14), 0 32px 64px -24px rgba(91, 26, 139, 0.16);
+
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --t-fast: 200ms;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: var(--sans); font-size: 16px; line-height: 1.55;
+    color: var(--ink); background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+  }
+  h2, h3, h4 {
+    font-family: var(--serif); font-weight: 500;
+    margin: 0; letter-spacing: -0.02em; line-height: 1.1;
+  }
+  ul { margin: 0; padding: 0; list-style: none; }
+  a { color: inherit; text-decoration: none; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 96px 0; }
+  .section-head { max-width: 760px; margin: 0 auto var(--s-7); text-align: center; }
+  .eyebrow {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--purple);
+    margin-bottom: var(--s-3);
+  }
+  .section-head h2 { font-size: clamp(28px, 3.4vw, 40px); }
+  .lede { font-size: 17px; line-height: 1.55; color: var(--ink-2); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 12px 22px; border-radius: var(--r-pill); font-weight: 500;
+    font-size: 14px; transition: all var(--t-fast) var(--ease); cursor: pointer;
+  }
+  .btn-ghost {
+    background: transparent; color: var(--ink); border: 1px solid var(--line);
+  }
+  .btn-ghost:hover { background: var(--surface); border-color: var(--ink); }
+
+  /* ============ BEGIN PRICING CSS (verbatim from anara-v2-glass.css) ============ */
+  .pricing { background: var(--cream); }
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-4); max-width: 1080px; margin: 0 auto;
+    align-items: stretch;
+  }
+  .tier {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    padding: var(--s-6);
+    display: flex; flex-direction: column; gap: var(--s-3);
+    box-shadow: var(--shadow-1);
+    transition: transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+  }
+  .tier:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+  .tier.is-featured {
+    background: var(--surface);
+    border: 1.5px solid var(--gold);
+    box-shadow: var(--shadow-3);
+    transform: translateY(-4px);
+    position: relative;
+  }
+  .tier.is-featured:hover { transform: translateY(-6px); }
+  .tier.is-featured::before {
+    content: "Most chosen by HR";
+    position: absolute; top: -1px; right: var(--s-5);
+    background: var(--gold); color: var(--ink);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 0 0 var(--r-sm) var(--r-sm);
+    box-shadow: 0 2px 6px rgba(201,165,108,0.28);
+  }
+  .tier-name {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--purple);
+  }
+  .tier.is-featured .tier-name { color: var(--gold-deep); }
+  .tier-price {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(32px, 3.6vw, 44px);
+    letter-spacing: -0.02em; line-height: 1; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .tier-price sub {
+    font-family: var(--sans); font-size: 14px; font-weight: 500;
+    color: var(--ink-3); vertical-align: baseline; margin-left: 4px;
+  }
+  .tier-blurb { color: var(--ink-2); font-size: 14px; line-height: 1.5; margin: var(--s-1) 0 var(--s-3); }
+  .tier-list {
+    display: flex; flex-direction: column; gap: var(--s-3);
+    font-size: 14px; line-height: 1.5; flex: 1;
+  }
+  .tier-list li {
+    display: flex; gap: var(--s-2); align-items: flex-start;
+    color: var(--ink-2);
+  }
+  .tier-list svg {
+    width: 16px; height: 16px; flex-shrink: 0; margin-top: 3px;
+    color: var(--purple);
+  }
+  .tier.is-featured .tier-list svg { color: var(--gold-deep); }
+  .tier .btn { margin-top: var(--s-4); justify-content: center; width: 100%; }
+
+  @media (max-width: 880px) {
+    .pricing-grid { grid-template-columns: 1fr; max-width: 440px; }
+    .tier.is-featured { transform: none; }
+    .tier.is-featured:hover { transform: translateY(-2px); }
+  }
+  /* ============ END PRICING CSS ============ */
+</style>
+</head>
+<body>
+
+<!-- ============ BEGIN PRICING HTML (verbatim from anara-v2-glass.html) ============ -->
+<section id="pricing" class="pricing section" aria-labelledby="pricing-title">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">How we structure</span>
+      <h2 id="pricing-title">No new budget line. Works through your existing OPD.</h2>
+      <p class="lede" style="margin: 12px auto 0;">Most clients run Anara through their OPD reimbursement budget — typically ₹5,000–15,000 per employee per year, already sitting in your GMC. Finance doesn't need to see a new line item.</p>
+    </div>
+    <div class="pricing-grid">
+      <article class="tier reveal">
+        <span class="tier-name">Essential</span>
+        <div class="tier-price">₹499<sub>/emp/mo</sub></div>
+        <p class="tier-blurb">Telehealth + care coordination. Good fit for distributed teams under 200.</p>
+        <ul class="tier-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>24/7 telehealth (video + phone)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Care manager (shared pod)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Annual digital health check</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Quarterly aggregate report</li>
+        </ul>
+        <a class="btn btn-ghost" href="#cta">Talk to sales</a>
+      </article>
+      <article class="tier is-featured reveal">
+        <span class="tier-name">Concierge</span>
+        <div class="tier-price">₹1,299<sub>/emp/mo</sub></div>
+        <p class="tier-blurb">On-site clinic days + dedicated care manager. Best for HQs of 200–2000.</p>
+        <ul class="tier-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Essential</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>On-site clinic (1–3 days/wk)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1:1 care manager per employee</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Specialist navigation + second opinions</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Quarterly CHRO report</li>
+        </ul>
+        <a class="btn btn-ghost" href="#cta">Book consult</a>
+      </article>
+      <article class="tier reveal">
+        <span class="tier-name">Enterprise</span>
+        <div class="tier-price">Custom<sub>quote</sub></div>
+        <p class="tier-blurb">Multi-city, multi-site, custom clinical SLAs. For 2,000+ employees.</p>
+        <ul class="tier-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Concierge</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Full-time on-site clinic</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Multi-site / multi-city deployment</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Custom integrations (HRIS, payroll)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Dedicated clinical leadership</li>
+        </ul>
+        <a class="btn btn-ghost" href="#cta">Request quote</a>
+      </article>
+    </div>
+  </div>
+</section>
+<!-- ============ END PRICING HTML ============ -->
+
+</body>
+</html>
