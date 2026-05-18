@@ -95,6 +95,39 @@
     counters.forEach(function (el) { obs.observe(el); });
   }
 
+  /* -------- 3b. Hero photo parallax (subtle scroll-driven translateY) -------- */
+  function initHeroParallax() {
+    var photo = document.getElementById('heroPhoto');
+    if (!photo || reduce) return;
+
+    var ticking = false;
+    var update = function () {
+      var rect = photo.getBoundingClientRect();
+      // Only animate while hero is in / near viewport
+      if (rect.bottom < 0 || rect.top > window.innerHeight) {
+        ticking = false;
+        return;
+      }
+      // -8% to +8% range based on scroll progress through viewport
+      var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+      var clamped = Math.max(0, Math.min(1, progress));
+      var offset = (clamped - 0.5) * 56; // ~28px each direction
+      photo.style.setProperty('--parallax', offset.toFixed(1) + 'px');
+      ticking = false;
+    };
+
+    var onScroll = function () {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  }
+
   /* -------- 4. Sample report bar reveal (motion #2) -------- */
   function initSampleReport() {
     var card = document.querySelector('.sample-card');
@@ -116,16 +149,265 @@
     obs.observe(card);
   }
 
-  /* Reveal animation removed — motion restraint per audit consensus. */
+  /* -------- 4b. Participation gap stage (compare section) -------- */
+  function initGapStage() {
+    var stage = document.getElementById('gapStage');
+    if (!stage) return;
 
-  /* -------- 6. Lead form (validation + Formspree submit + inline success) -------- */
+    var animateValue = function (el) {
+      var target = parseFloat(el.getAttribute('data-target'));
+      if (reduce) { el.textContent = target + '%'; return; }
+      var dur = 1400;
+      var start = performance.now();
+      var tick = function (now) {
+        var p = Math.min(1, (now - start) / dur);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + '%';
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    var reveal = function () {
+      stage.classList.add('is-revealed');
+      stage.querySelectorAll('[data-target]').forEach(animateValue);
+    };
+
+    if (!('IntersectionObserver' in window)) { reveal(); return; }
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          reveal();
+          obs.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    obs.observe(stage);
+  }
+
+  /* -------- 5. Scroll progress hairline -------- */
+  function initScrollProgress() {
+    var bar = document.getElementById('scrollProgress');
+    if (!bar || reduce) return;
+
+    var ticking = false;
+    var update = function () {
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      var prog = docH > 0 ? Math.min(1, Math.max(0, window.scrollY / docH)) : 0;
+      bar.style.transform = 'scaleX(' + prog.toFixed(4) + ')';
+      ticking = false;
+    };
+
+    var onScroll = function () {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  }
+
+  /* -------- 6. Reveal stagger on scroll-in -------- */
+  function initReveal() {
+    var els = document.querySelectorAll('.reveal');
+    if (!els.length) return;
+
+    if (reduce || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('is-in'); });
+      return;
+    }
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('is-in');
+          obs.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+
+    // Avoid first-paint flash: instantly reveal anything already in viewport.
+    var vh = window.innerHeight;
+    els.forEach(function (el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < vh && rect.bottom > 0) {
+        el.classList.add('is-in');
+      } else {
+        obs.observe(el);
+      }
+    });
+  }
+
+  /* -------- 7. Logo marquee — duplicate items for seamless loop -------- */
+  function initLogoMarquee() {
+    var track = document.getElementById('logosTrack');
+    if (!track) return;
+    if (reduce) return;
+
+    var viewport = track.parentElement;
+    var originals = Array.prototype.slice.call(track.children);
+    if (!originals.length) return;
+
+    // Pad until single set is wide enough to span viewport at least once
+    var viewportWidth = viewport.offsetWidth || window.innerWidth;
+    var safety = 0;
+    while (track.scrollWidth < viewportWidth * 1.5 && safety < 30) {
+      originals.forEach(function (item) {
+        var clone = item.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+      });
+      safety++;
+    }
+
+    // Clone full current set once more so translateX(-50%) wraps seamlessly
+    var current = Array.prototype.slice.call(track.children);
+    current.forEach(function (item) {
+      var clone = item.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+  }
+
+  /* -------- 8. FAQ smooth height -------- */
+  function initFaqSmooth() {
+    var items = document.querySelectorAll('.faq-item');
+    if (!items.length) return;
+
+    items.forEach(function (item) {
+      var summary = item.querySelector('summary');
+      var body = item.querySelector('.faq-body');
+      if (!summary || !body) return;
+
+      summary.addEventListener('click', function (e) {
+        if (reduce) return; // native toggle
+        e.preventDefault();
+        if (item.classList.contains('is-animating')) return;
+        item.classList.add('is-animating');
+
+        var onEnd = function (ev) {
+          if (ev.propertyName !== 'height') return;
+          body.removeEventListener('transitionend', onEnd);
+          body.style.height = '';
+          item.classList.remove('is-animating');
+        };
+
+        if (item.open) {
+          // Close
+          var startH = body.scrollHeight;
+          body.style.height = startH + 'px';
+          /* Force reflow */ void body.offsetHeight;
+          body.style.height = '0px';
+          var onCloseEnd = function (ev) {
+            if (ev.propertyName !== 'height') return;
+            body.removeEventListener('transitionend', onCloseEnd);
+            item.open = false;
+            body.style.height = '';
+            item.classList.remove('is-animating');
+          };
+          body.addEventListener('transitionend', onCloseEnd);
+        } else {
+          // Open
+          item.open = true;
+          var targetH = body.scrollHeight;
+          body.style.height = '0px';
+          /* Force reflow */ void body.offsetHeight;
+          body.style.height = targetH + 'px';
+          body.addEventListener('transitionend', onEnd);
+        }
+      });
+    });
+  }
+
+  /* -------- 8a. Scroll-spy nav (highlight in-view section) -------- */
+  function initScrollSpy() {
+    var links = document.querySelectorAll('.nav-links a[href^="#"]');
+    if (!links.length || !('IntersectionObserver' in window)) return;
+
+    var map = {};
+    var sections = [];
+    links.forEach(function (a) {
+      var id = a.getAttribute('href').slice(1);
+      var sec = id ? document.getElementById(id) : null;
+      if (sec) {
+        map[id] = a;
+        sections.push(sec);
+      }
+    });
+    if (!sections.length) return;
+
+    var state = {};
+    var apply = function () {
+      var bestId = null, bestTop = Infinity;
+      Object.keys(state).forEach(function (id) {
+        var s = state[id];
+        if (s && s.intersecting && s.top < bestTop) {
+          bestTop = s.top; bestId = id;
+        }
+      });
+      links.forEach(function (l) { l.classList.remove('is-active'); });
+      if (bestId && map[bestId]) map[bestId].classList.add('is-active');
+    };
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        state[en.target.id] = {
+          intersecting: en.isIntersecting,
+          top: en.boundingClientRect.top
+        };
+      });
+      apply();
+    }, { rootMargin: '-25% 0px -55% 0px', threshold: 0 });
+
+    sections.forEach(function (sec) { obs.observe(sec); });
+  }
+
+  /* -------- 8b. FAQ category filter -------- */
+  function initFaqFilter() {
+    var chips = document.querySelectorAll('.faq-chip');
+    var items = document.querySelectorAll('.faq-item[data-cat]');
+    if (!chips.length || !items.length) return;
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var filter = chip.getAttribute('data-filter');
+        chips.forEach(function (c) {
+          c.classList.toggle('is-active', c === chip);
+          c.setAttribute('aria-pressed', c === chip ? 'true' : 'false');
+        });
+        items.forEach(function (item) {
+          var match = filter === 'all' || item.getAttribute('data-cat') === filter;
+          item.hidden = !match;
+          if (!match && item.open) item.open = false;
+        });
+      });
+    });
+  }
+
+  /* -------- 9. Lead form (validation + Formspree submit + inline success) -------- */
   function initLeadForm() {
     var form = document.getElementById('leadForm');
     if (!form) return;
 
     var successEl = form.parentElement.querySelector('.form-success');
     var submitBtn = form.querySelector('button[type="submit"]');
-    var submitBtnLabel = submitBtn ? submitBtn.textContent : '';
+
+    // Float-label fill state for select (placeholder-shown trick can't see selects)
+    var selectRows = form.querySelectorAll('.form-float--select');
+    var syncSelectFill = function (row) {
+      var sel = row.querySelector('select');
+      if (!sel) return;
+      row.classList.toggle('is-filled', !!sel.value);
+    };
+    selectRows.forEach(function (row) {
+      syncSelectFill(row);
+      var sel = row.querySelector('select');
+      if (sel) sel.addEventListener('change', function () { syncSelectFill(row); });
+    });
 
     var clearError = function (row) {
       row.classList.remove('has-error');
@@ -189,7 +471,7 @@
 
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending…';
+        submitBtn.setAttribute('data-state', 'sending');
       }
 
       var data = new FormData(form);
@@ -197,19 +479,22 @@
       var isPlaceholder = !endpoint || endpoint.indexOf('REPLACE_WITH_YOUR_ID') !== -1;
 
       var showSuccess = function () {
-        form.style.display = 'none';
-        if (successEl) {
-          successEl.classList.add('is-visible');
-          successEl.setAttribute('tabindex', '-1');
-          successEl.focus();
-        }
+        if (submitBtn) submitBtn.setAttribute('data-state', 'done');
+        setTimeout(function () {
+          form.style.display = 'none';
+          if (successEl) {
+            successEl.classList.add('is-visible');
+            successEl.setAttribute('tabindex', '-1');
+            successEl.focus();
+          }
+        }, 700);
       };
 
       // If the endpoint is still the placeholder, fake a success state so the page
       // is usable for QA / preview. Replace REPLACE_WITH_YOUR_ID with a real
       // Formspree (or other) form endpoint to actually deliver leads.
       if (isPlaceholder) {
-        setTimeout(showSuccess, 600);
+        setTimeout(showSuccess, 900);
         return;
       }
 
@@ -228,7 +513,7 @@
         .catch(function () {
           if (submitBtn) {
             submitBtn.disabled = false;
-            submitBtn.textContent = submitBtnLabel;
+            submitBtn.removeAttribute('data-state');
           }
           alert('Could not submit. Please email Sales@anara.health directly.');
         });
@@ -239,8 +524,16 @@
   function boot() {
     initNav();
     initNavScroll();
+    initScrollProgress();
+    initHeroParallax();
+    initReveal();
+    initLogoMarquee();
+    initScrollSpy();
+    initFaqSmooth();
+    initFaqFilter();
     initCountUp();
     initSampleReport();
+    initGapStage();
     initLeadForm();
   }
 
