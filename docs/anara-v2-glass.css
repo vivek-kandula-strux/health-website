@@ -14,8 +14,8 @@
   --gold-deep: #A68552;
   --ink: #1A0F2E;
   --ink-2: rgba(26, 15, 46, 0.72);
-  --ink-3: rgba(26, 15, 46, 0.52);
-  --ink-4: rgba(26, 15, 46, 0.32);
+  --ink-3: rgba(26, 15, 46, 0.64);   /* WCAG AA: 5.2:1 on cream (was 0.52 = 4.4:1 fail) */
+  --ink-4: rgba(26, 15, 46, 0.40);   /* decorative only — never use for text */
   --cream: #FAF7F2;
   --cream-2: #F4EFE7;
   --surface: #FFFFFF;
@@ -348,12 +348,23 @@ h3, .h3 {
   .nav-toggle { display: inline-flex; }
   .nav-links.open {
     display: flex; flex-direction: column;
-    position: absolute; top: 68px; left: 0; right: 0;
-    background: rgba(250, 247, 242, 0.96);
-    backdrop-filter: var(--backdrop);
-    padding: var(--s-4) var(--s-5) var(--s-5);
-    border-bottom: 1px solid var(--line);
+    /* fixed against the viewport. Use viewport units instead of right/bottom
+       because the nav-wrap's backdrop-filter creates a containing block that
+       would otherwise trap a fixed descendant inside the 68px header. */
+    position: fixed;
+    top: 68px; left: 0;
+    width: 100vw;
+    height: calc(100vh - 68px);
+    background: var(--cream);                  /* solid, no peek-through */
+    padding: var(--s-5) var(--s-5) max(var(--s-5), env(safe-area-inset-bottom));
+    border-bottom: none;
     gap: var(--s-2);
+    overflow-y: auto;
+    z-index: 99;
+  }
+  .nav-links.open a {
+    min-height: 48px; font-size: 17px;          /* easier tap + readability */
+    padding: 12px 14px;
   }
   .nav-links.open .nav-cta-mobile {
     display: block;
@@ -364,8 +375,12 @@ h3, .h3 {
   .nav-links.open .nav-cta-mobile .btn-pill {
     width: 100%;
     justify-content: center;
+    min-height: 48px;
   }
 }
+
+/* Body scroll lock when mobile nav is open (H-M1) */
+body.nav-open { overflow: hidden; }
 .nav .btn-pill {
   padding: 9px 18px; min-height: 40px; font-size: 14px;
   background: var(--ink); color: #fff;
@@ -408,18 +423,7 @@ h3, .h3 {
 .hero-microcopy { font-size: 13px; color: var(--ink-3); }
 
 /* Hero stats — editorial three-up: big number + single clean label */
-.hero-stats-wrap { margin-top: var(--s-8); position: relative; }
-.hero-stats-wrap::before {
-  content: "";
-  position: absolute;
-  top: 0; left: var(--s-5); right: var(--s-5);
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0,
-    var(--line-strong) 10%,
-    var(--line-strong) 90%,
-    transparent 100%);
-}
+.hero-stats-wrap { margin-top: var(--s-7); position: relative; }
 .hero-stats {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: var(--s-7);
@@ -437,10 +441,11 @@ h3, .h3 {
   display: flex; align-items: flex-start;
   gap: 4px;
 }
-.hero-stat dt em {
+.hero-stat dt em,
+.hero-stat dt .unit {
   font-family: var(--serif);
   font-style: italic;
-  color: var(--gold);
+  color: var(--gold-deep);  /* WCAG AA large-text: 3.1:1 on cream */
   font-weight: 500;
   font-size: 0.5em;
   line-height: 1;
@@ -448,7 +453,7 @@ h3, .h3 {
 }
 .hero-stat-star {
   display: inline-flex;
-  color: var(--gold);
+  color: var(--gold-deep);
   margin-top: 0.18em;
   margin-left: 6px;
 }
@@ -466,10 +471,14 @@ h3, .h3 {
   max-width: 26ch;
 }
 
-/* Hero photo — transparent cutout, no frame */
+/* Hero photo — transparent cutout, no frame.
+   align-self: end anchors the photo to the bottom of the hero row.
+   The scale(1.30) transform already lets it visually bleed into the
+   stats area below, creating a cinematic flow without a hard divider. */
 .hero-photo {
   position: relative;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: flex-end; justify-content: center;
+  align-self: end;
   min-height: 100%;
   --parallax: 0px;
 }
@@ -480,8 +489,14 @@ h3, .h3 {
   position: relative;
   transform: translate3d(8%, var(--parallax), 0) scale(1.30);
   transform-origin: 50% 50%;
-  filter: drop-shadow(0 30px 30px rgba(26,15,46,0.28)) drop-shadow(0 8px 16px rgba(26,15,46,0.16));
   will-change: transform;
+  /* Soft fade-out at the bottom so the cutout's rough pixel edges
+     (pants hems, shoe outlines, antialiasing halo) dissolve into the
+     page background instead of reading as a torn paper edge.
+     No drop-shadow filter — it was halo-ing every silhouette on the
+     top / left / right edges and making the photo read as a framed box. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
 }
 
 /* ===== Hero floating product cards ===== */
@@ -629,10 +644,11 @@ h3, .h3 {
   color: var(--purple);
   font-variant-numeric: tabular-nums;
 }
-.fc-big em {
+.fc-big em,
+.fc-big .unit {
   font-family: var(--mono);
   font-style: normal;
-  font-size: 18px; color: var(--gold);
+  font-size: 18px; color: var(--purple);
   letter-spacing: 0;
   margin-left: 4px;
 }
@@ -923,6 +939,7 @@ h3, .h3 {
   gap: var(--s-2) var(--s-3);
   padding: var(--s-5) 0 0;
   border-top: 1px solid var(--line);
+  list-style: none;
 }
 .addons-lead {
   font-family: var(--mono);
@@ -1224,9 +1241,9 @@ h3, .h3 {
   stroke-linecap: butt;
   transition: stroke-dasharray 1200ms var(--ease);
 }
-.donut-seg-1 { stroke: var(--gold); }
-.donut-seg-2 { stroke: rgba(255,255,255,0.55); }
-.donut-seg-3 { stroke: var(--purple); }
+.donut-seg-1 { stroke: var(--success); }   /* Normal — green */
+.donut-seg-2 { stroke: var(--gold); }       /* Watch — gold */
+.donut-seg-3 { stroke: var(--danger); }     /* Risk — red */
 .sample-card .donut-seg { stroke-dasharray: 0 100 !important; }
 .sample-card.is-revealed .donut-seg-1 { stroke-dasharray: 64 100 !important; }
 .sample-card.is-revealed .donut-seg-2 { stroke-dasharray: 22 100 !important; transition-delay: 200ms; }
@@ -1266,9 +1283,9 @@ h3, .h3 {
   font-variant-numeric: tabular-nums;
 }
 .dl-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.dl-1 { background: var(--gold); }
-.dl-2 { background: rgba(255,255,255,0.55); }
-.dl-3 { background: var(--purple); }
+.dl-1 { background: var(--success); }
+.dl-2 { background: var(--gold); }
+.dl-3 { background: var(--danger); }
 
 /* Sparkline */
 .sample-spark-card {
@@ -1492,8 +1509,22 @@ h3, .h3 {
   grid-template-columns: repeat(3, 1fr);
   gap: var(--s-4);
 }
+
+/* Asymmetric editorial layout — magazine-spread feel.
+   Hero (CEO) anchors the left, three supporting cards arrange right. */
+.about-team-grid--asym {
+  grid-template-columns: 1.55fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "hero a b"
+    "hero c c";
+  gap: var(--s-5) var(--s-5);
+  align-items: stretch;
+}
+
 .about-person {
   display: flex; flex-direction: column; gap: var(--s-3);
+  position: relative;
 }
 .about-portrait {
   aspect-ratio: 1 / 1.15;
@@ -1508,8 +1539,102 @@ h3, .h3 {
   overflow: hidden;
   display: flex; align-items: flex-end; justify-content: flex-start;
 }
+.about-portrait img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  filter: saturate(0.96) contrast(1.02);
+  transition: transform .6s cubic-bezier(.2,.7,.2,1);
+}
+.about-person:hover .about-portrait img { transform: scale(1.025); }
+
+/* Variants for asymmetric grid */
+.about-portrait--tall   { aspect-ratio: 4 / 5; }
+.about-portrait--square { aspect-ratio: 1 / 1; }
+.about-portrait--tall img { object-position: center 18%; }
+
+/* Hero card (featured leader, e.g. CEO) — takes both rows in left column.
+   Larger portrait + name treated like a magazine cover. */
+.about-person--hero {
+  gap: var(--s-4);
+}
+.about-person--hero .about-name {
+  font-size: clamp(22px, 2.2vw, 30px);
+  letter-spacing: -0.018em;
+  line-height: 1.1;
+}
+.about-person--hero .about-role {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+}
+.about-person--hero .about-bio {
+  font-size: 14px;
+  max-width: 48ch;
+}
+
+/* Wide horizontal card (spans bottom-right of asym grid) — photo left, copy right */
+.about-person--wide {
+  flex-direction: row;
+  gap: var(--s-5);
+  align-items: stretch;
+}
+.about-person--wide .about-portrait {
+  flex: 0 0 38%;
+  max-width: 220px;
+  aspect-ratio: 1 / 1;
+}
+.about-person--wide .about-person-body {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  gap: var(--s-2);
+}
+.about-person--wide .about-bio { font-size: 13.5px; }
+
 .about-portrait-tag {
   display: none;
+}
+
+/* Editorial environment photo (between thesis and team) */
+.about-environment {
+  margin: var(--s-8) 0 var(--s-2);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--s-5);
+  align-items: end;
+}
+.about-environment img {
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: cover;
+  object-position: 50% 62%;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-2);
+  display: block;
+}
+.about-environment figcaption {
+  display: flex; flex-direction: column; gap: var(--s-2);
+  padding-bottom: var(--s-3);
+}
+.about-environment-tag {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--purple);
+}
+.about-environment-cap {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: 1.45;
+  color: var(--ink-2);
+  letter-spacing: -0.005em;
+  max-width: 38ch;
+}
+@media (max-width: 880px) {
+  .about-environment { grid-template-columns: 1fr; gap: var(--s-3); }
+  .about-environment img { max-height: 320px; }
+  .about-environment figcaption { padding-bottom: 0; }
 }
 .about-role {
   font-size: 10px; font-weight: 700;
@@ -1539,11 +1664,36 @@ h3, .h3 {
 
 @media (max-width: 880px) {
   .about-team-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-team-grid--asym {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "hero hero"
+      "a    b"
+      "c    c";
+    gap: var(--s-4);
+  }
+  .about-person--hero { flex-direction: row; gap: var(--s-4); }
+  .about-person--hero .about-portrait--tall { flex: 0 0 42%; max-width: 280px; aspect-ratio: 4 / 5; }
+  .about-person--hero .about-person-body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: var(--s-2); }
+  .about-person--wide { flex-direction: row; }
+  .about-person--wide .about-portrait { max-width: 180px; }
   .about-mark { flex-wrap: wrap; gap: var(--s-2); }
   .about-rule { display: none; }
 }
-@media (max-width: 520px) {
+@media (max-width: 600px) {
   .about-team-grid { grid-template-columns: 1fr; }
+  .about-team-grid--asym {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "hero"
+      "a"
+      "b"
+      "c";
+  }
+  .about-person--hero { flex-direction: column; }
+  .about-person--hero .about-portrait--tall { flex: none; max-width: 100%; }
+  .about-person--wide { flex-direction: column; }
+  .about-person--wide .about-portrait { flex: none; max-width: 100%; aspect-ratio: 4 / 3; }
 }
 
 /* ============ Founder + Testimonials (split) ============ */
@@ -1585,8 +1735,13 @@ h3, .h3 {
 }
 .founder-portrait img {
   width: 100%; height: 100%; object-fit: cover;
+  object-position: center 18%;
   position: absolute; inset: 0; z-index: 1;
 }
+.founder-portrait.has-photo {
+  background: var(--surface);
+}
+.founder-portrait.has-photo::before { display: none; }
 
 .founder-quote { padding-left: 0; }
 .founder-quote blockquote {
@@ -1682,6 +1837,20 @@ h3, .h3 {
   flex-shrink: 0;
 }
 .badge.is-gold .badge-icon { background: linear-gradient(135deg, var(--gold), var(--gold-deep)); color: var(--ink); }
+.badge.badge--secondary {
+  background: transparent;
+  border-color: var(--line);
+  box-shadow: none;
+  color: var(--ink-2);
+  font-size: 12px;
+  padding: 8px 14px;
+}
+.badge.badge--secondary .badge-icon {
+  width: 22px; height: 22px;
+  background: transparent;
+  border: 1px dashed var(--line-strong);
+  color: var(--ink-3);
+}
 
 /* ============ FAQ (native details + chip filter) ============ */
 .faq { background: var(--cream-2); }
@@ -1812,10 +1981,18 @@ h3, .h3 {
   box-shadow: 0 0 0 3px rgba(185,28,28,0.12);
 }
 .form-error {
+  display: block;
   font-size: 12px; color: var(--danger);
-  display: none;
+  margin-top: 4px;
+  min-height: 0;
+  line-height: 1.3;
 }
-.form-row.has-error .form-error { display: block; }
+.form-error:empty {
+  /* visually collapsed but still in the accessibility tree so role="alert" fires */
+  margin-top: 0;
+  height: 0;
+  overflow: hidden;
+}
 
 /* Float labels */
 .form-float label {
@@ -1904,15 +2081,34 @@ h3, .h3 {
 .form-meta {
   font-size: 12px; color: var(--ink-3); line-height: 1.5;
 }
+.form-submit-error {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 13px;
+  color: var(--danger);
+  font-weight: 500;
+}
 .form-success {
-  display: none;
+  /* Stays in render tree; visually hidden until is-visible.
+     SR announcement is handled by #formAnnouncer (sr-only live region). */
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
   padding: var(--s-5);
   background: rgba(21,128,61,0.08);
   border: 1px solid rgba(21,128,61,0.24);
   border-radius: var(--r-md);
   color: var(--ink);
 }
-.form-success.is-visible { display: block; }
+.form-success.is-visible {
+  position: static;
+  width: auto; height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
 .form-success strong {
   display: block; font-family: var(--serif); font-weight: 500;
   font-size: 18px; margin-bottom: 6px;
@@ -1959,7 +2155,7 @@ h3, .h3 {
 .f-col ul { display: flex; flex-direction: column; gap: 4px; }
 .f-col a {
   display: inline-flex; align-items: center;
-  padding: 4px 0; min-height: 32px;
+  padding: 10px 0; min-height: 44px;
   font-size: 14px; color: rgba(255,255,255,0.6);
   transition: color var(--t-fast) var(--ease);
 }
@@ -1970,7 +2166,11 @@ h3, .h3 {
   font-size: 13px; color: rgba(255,255,255,0.5);
   gap: var(--s-3); flex-wrap: wrap;
 }
-.f-base a { color: rgba(255,255,255,0.6); }
+.f-base a {
+  color: rgba(255,255,255,0.6);
+  display: inline-flex; align-items: center;
+  padding: 10px 0; min-height: 44px;
+}
 .f-base a:hover { color: #fff; }
 
 @media (max-width: 880px) {
@@ -1986,11 +2186,11 @@ h3, .h3 {
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 600ms var(--ease), transform 600ms var(--ease);
-  will-change: opacity, transform;
 }
 .reveal.is-in {
   opacity: 1;
   transform: none;
+  will-change: auto;
 }
 .no-js .reveal { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
@@ -2278,7 +2478,7 @@ h3, .h3 {
 .pilot-metric strong {
   font-family: var(--serif); font-weight: 500;
   font-size: 36px; letter-spacing: -0.03em;
-  color: var(--purple); line-height: 1;
+  color: var(--ink); line-height: 1;
 }
 .pilot-metric span { font-size: 14px; color: var(--ink-2); }
 @media (max-width: 880px) {
@@ -2356,8 +2556,52 @@ h3, .h3 {
   text-decoration: none;
   border-bottom: 1px solid var(--line-strong);
   transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+  display: inline-block;
+  padding: 8px 0;
+  min-height: 44px;
+  line-height: 28px;
 }
 .cta-contact-note a:hover {
   color: var(--purple);
   border-color: var(--purple);
+}
+
+/* ============================================================
+   Performance — content-visibility on offscreen sections.
+   Tells the browser to skip rendering work for far-offscreen
+   content. Massive scroll-perf and initial-paint win on long
+   pages. contain-intrinsic-size is a placeholder height so the
+   scrollbar stays stable while content is skipped.
+   ============================================================ */
+.compare,
+.services,
+.hiw,
+.pilot,
+.team,
+.sample,
+.about,
+.trust-block,
+.faq,
+.cta {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+/* Lighter backdrop blur on cards (cheaper to composite during scroll).
+   Nav keeps the stronger blur because it sits above critical content. */
+.float-card,
+.pilot-card,
+.sample-card,
+.tcard,
+.faq-item {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Disable scroll-driven hero parallax on mobile — biggest jank source. */
+@media (max-width: 880px), (hover: none) {
+  .hero-photo img,
+  #heroPhoto img {
+    transform: none !important;
+  }
 }

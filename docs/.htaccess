@@ -3,9 +3,8 @@
 # Place this file at the web root (public_html/)
 # ============================================================
 
-# --- Default landing page (variant picker shown first) ---
-# Edit this line to change the default: e.g. "anara-v1-bento.html anara.html"
-DirectoryIndex picker.html anara.html index.html
+# --- Default landing page ---
+DirectoryIndex index.html
 
 # --- Force HTTPS ---
 <IfModule mod_rewrite.c>

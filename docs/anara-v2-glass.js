@@ -16,6 +16,7 @@
 
     var setOpen = function (open) {
       links.classList.toggle('open', open);
+      document.body.classList.toggle('nav-open', open);
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     };
@@ -41,12 +42,20 @@
   function initNavScroll() {
     var nav = document.querySelector('.nav-wrap');
     if (!nav) return;
+    var ticking = false;
     var update = function () {
       if (window.scrollY > 24) nav.setAttribute('data-scrolled', '');
       else nav.removeAttribute('data-scrolled');
+      ticking = false;
+    };
+    var onScroll = function () {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
     };
     update();
-    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
 
   /* -------- 3. Hero stat count-up (motion #1) -------- */
@@ -58,11 +67,11 @@
       var target = parseFloat(el.getAttribute('data-count'));
       var suffix = el.getAttribute('data-suffix') || '';
       var decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
-      var em = el.querySelector('em');
-      var emHTML = em ? em.outerHTML : '';
+      var unitEl = el.querySelector('em, .unit');
+      var unitHTML = unitEl ? unitEl.outerHTML : '';
 
       if (reduce) {
-        el.innerHTML = target.toFixed(decimals) + suffix + emHTML;
+        el.innerHTML = target.toFixed(decimals) + suffix + unitHTML;
         return;
       }
 
@@ -72,7 +81,7 @@
         var p = Math.min(1, (now - start) / dur);
         var eased = 1 - Math.pow(1 - p, 3);
         var v = (target * eased).toFixed(decimals);
-        el.innerHTML = v + suffix + emHTML;
+        el.innerHTML = v + suffix + unitHTML;
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
@@ -95,27 +104,30 @@
     counters.forEach(function (el) { obs.observe(el); });
   }
 
-  /* -------- 3b. Hero photo parallax (subtle scroll-driven translateY) -------- */
+  /* -------- 3b. Hero photo parallax (subtle scroll-driven translateY) --------
+     Disabled on mobile / touch / narrow viewports — the constant
+     getBoundingClientRect() reads were the #1 scroll-jank source. */
   function initHeroParallax() {
     var photo = document.getElementById('heroPhoto');
     if (!photo || reduce) return;
+    var mqTouch = window.matchMedia('(hover: none), (max-width: 880px)');
+    if (mqTouch.matches) return;
 
     var ticking = false;
-    var update = function () {
+    var heroBottom = 0;
+    var measure = function () {
       var rect = photo.getBoundingClientRect();
-      // Only animate while hero is in / near viewport
-      if (rect.bottom < 0 || rect.top > window.innerHeight) {
-        ticking = false;
-        return;
-      }
-      // -8% to +8% range based on scroll progress through viewport
-      var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-      var clamped = Math.max(0, Math.min(1, progress));
-      var offset = (clamped - 0.5) * 56; // ~28px each direction
+      heroBottom = rect.top + window.scrollY + rect.height;
+    };
+    var update = function () {
+      // Cheap scroll-driven calc — no layout reads in the hot path.
+      var y = window.scrollY;
+      if (y > heroBottom) { ticking = false; return; }
+      var progress = y / Math.max(1, heroBottom);
+      var offset = (progress - 0.5) * 32;
       photo.style.setProperty('--parallax', offset.toFixed(1) + 'px');
       ticking = false;
     };
-
     var onScroll = function () {
       if (!ticking) {
         requestAnimationFrame(update);
@@ -123,8 +135,9 @@
       }
     };
 
+    measure();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
+    window.addEventListener('resize', measure, { passive: true });
     update();
   }
 
@@ -461,9 +474,31 @@
       return valid;
     };
 
+    var announcer = document.getElementById('formAnnouncer');
+    var announce = function (msg) {
+      if (!announcer) return;
+      announcer.textContent = '';
+      // Defer to next tick so SR re-reads
+      setTimeout(function () { announcer.textContent = msg; }, 60);
+    };
+
+    var showFormError = function (msg) {
+      announce(msg);
+      var existing = form.querySelector('.form-submit-error');
+      if (!existing) {
+        existing = document.createElement('p');
+        existing.className = 'form-submit-error';
+        existing.setAttribute('role', 'alert');
+        var actions = form.querySelector('.form-actions');
+        if (actions) actions.appendChild(existing);
+      }
+      existing.textContent = msg;
+    };
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!validate()) {
+        announce('There are errors in the form. Please review the highlighted fields.');
         var firstError = form.querySelector('.has-error input, .has-error select, .has-error textarea');
         if (firstError) firstError.focus();
         return;
@@ -473,6 +508,7 @@
         submitBtn.disabled = true;
         submitBtn.setAttribute('data-state', 'sending');
       }
+      announce('Submitting your request.');
 
       var data = new FormData(form);
       var endpoint = form.getAttribute('action');
@@ -487,23 +523,28 @@
             successEl.setAttribute('tabindex', '-1');
             successEl.focus();
           }
+          announce('Request received. Our team will reach out within 48 hours.');
         }, 700);
       };
 
-      // If the endpoint is still the placeholder, fake a success state so the page
-      // is usable for QA / preview. Replace REPLACE_WITH_YOUR_ID with a real
-      // Formspree (or other) form endpoint to actually deliver leads.
       if (isPlaceholder) {
+        // Backend not wired yet — flag in console for engineers, still show success state for QA.
+        if (window.console && console.warn) console.warn('Form action is a placeholder; submissions are not delivered.');
         setTimeout(showSuccess, 900);
         return;
       }
 
+      var ctrl = new AbortController();
+      var timeout = setTimeout(function () { ctrl.abort(); }, 10000);
+
       fetch(endpoint, {
         method: 'POST',
         body: data,
-        headers: { 'Accept': 'application/json' }
+        headers: { 'Accept': 'application/json' },
+        signal: ctrl.signal
       })
         .then(function (res) {
+          clearTimeout(timeout);
           if (res.ok) {
             showSuccess();
           } else {
@@ -511,11 +552,12 @@
           }
         })
         .catch(function () {
+          clearTimeout(timeout);
           if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.removeAttribute('data-state');
           }
-          alert('Could not submit. Please email Sales@anara.health directly.');
+          showFormError('We could not submit your request. Please email sales@anara.health directly.');
         });
     });
   }
