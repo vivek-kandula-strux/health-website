@@ -917,6 +917,21 @@ body.nav-open { overflow: hidden; }
 .bento-tile p { color: var(--ink-2); font-size: 15px; line-height: 1.55; }
 .bento-tile .link-arrow { margin-top: auto; padding-top: var(--s-4); }
 
+.bento-tile-photo {
+  margin-top: auto;
+  padding-top: var(--s-5);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  aspect-ratio: 16 / 11;
+  display: block;
+}
+.bento-tile-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  border-radius: var(--r-lg);
+  display: block;
+}
+
 .bento-tile-1 {
   background:
     radial-gradient(ellipse 80% 50% at 100% 100%, rgba(91,26,139,0.06), transparent 60%),
@@ -1514,10 +1529,9 @@ body.nav-open { overflow: hidden; }
    Hero (CEO) anchors the left, three supporting cards arrange right. */
 .about-team-grid--asym {
   grid-template-columns: 1.55fr 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto;
   grid-template-areas:
-    "hero a b"
-    "hero c c";
+    "hero a b";
   gap: var(--s-5) var(--s-5);
   align-items: stretch;
 }
@@ -1572,24 +1586,6 @@ body.nav-open { overflow: hidden; }
   font-size: 14px;
   max-width: 48ch;
 }
-
-/* Wide horizontal card (spans bottom-right of asym grid) — photo left, copy right */
-.about-person--wide {
-  flex-direction: row;
-  gap: var(--s-5);
-  align-items: stretch;
-}
-.about-person--wide .about-portrait {
-  flex: 0 0 38%;
-  max-width: 220px;
-  aspect-ratio: 1 / 1;
-}
-.about-person--wide .about-person-body {
-  flex: 1;
-  display: flex; flex-direction: column; justify-content: center;
-  gap: var(--s-2);
-}
-.about-person--wide .about-bio { font-size: 13.5px; }
 
 .about-portrait-tag {
   display: none;
@@ -1668,15 +1664,12 @@ body.nav-open { overflow: hidden; }
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       "hero hero"
-      "a    b"
-      "c    c";
+      "a    b";
     gap: var(--s-4);
   }
   .about-person--hero { flex-direction: row; gap: var(--s-4); }
   .about-person--hero .about-portrait--tall { flex: 0 0 42%; max-width: 280px; aspect-ratio: 4 / 5; }
   .about-person--hero .about-person-body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: var(--s-2); }
-  .about-person--wide { flex-direction: row; }
-  .about-person--wide .about-portrait { max-width: 180px; }
   .about-mark { flex-wrap: wrap; gap: var(--s-2); }
   .about-rule { display: none; }
 }
@@ -1687,13 +1680,10 @@ body.nav-open { overflow: hidden; }
     grid-template-areas:
       "hero"
       "a"
-      "b"
-      "c";
+      "b";
   }
   .about-person--hero { flex-direction: column; }
   .about-person--hero .about-portrait--tall { flex: none; max-width: 100%; }
-  .about-person--wide { flex-direction: column; }
-  .about-person--wide .about-portrait { flex: none; max-width: 100%; aspect-ratio: 4 / 3; }
 }
 
 /* ============ Founder + Testimonials (split) ============ */
