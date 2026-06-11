@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#5B1A8B" />
   <meta name="color-scheme" content="light" />
+  <meta name="format-detection" content="telephone=no" />
   <title>Anara Health — Corporate Healthcare for India's Workforce</title>
   <meta name="description" content="On-site clinics, telehealth, and a dedicated care manager for every employee. Built for Indian companies of 50+. Live in 2 weeks. DPDP compliant." />
 
@@ -15,7 +16,7 @@
   <meta property="og:title" content="Anara Health — Corporate Healthcare for India's Workforce" />
   <meta property="og:description" content="On-site clinics, telehealth, and a dedicated care manager for every employee. Live in 2 weeks." />
   <meta property="og:url" content="https://anara.health/" />
-  <meta property="og:image" content="https://anara.health/og-image.png" />
+  <meta property="og:image" content="https://anara.health/og-image.png?v=2" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Anara Health — Corporate Healthcare for India's Workforce" />
@@ -24,21 +25,20 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Anara Health — Corporate Healthcare for India's Workforce" />
   <meta name="twitter:description" content="On-site clinics, telehealth, and a dedicated care manager for every employee. Live in 2 weeks." />
-  <meta name="twitter:image" content="https://anara.health/og-image.png" />
+  <meta name="twitter:image" content="https://anara.health/og-image.png?v=2" />
   <meta name="twitter:image:alt" content="Anara Health — Corporate Healthcare for India's Workforce" />
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 4 L28 26 H4 Z M11 26 L16 14 L21 26' fill='none' stroke='%235B1A8B' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="image" type="image/avif"
     href="indian-family-1100.avif"
     imagesrcset="indian-family-700.avif 700w, indian-family-1100.avif 1100w, indian-family-1500.avif 1500w"
     imagesizes="(max-width: 880px) 100vw, 50vw"
     fetchpriority="high" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Outfit:wght@400;500;600;700&display=swap" />
-  <link rel="stylesheet" href="anara-v2-glass.css" />
+  <link rel="preload" as="font" type="font/woff2" href="fonts/fraunces-latin.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="fonts/outfit-latin.woff2" crossorigin />
+  <link rel="stylesheet" href="anara-v2-glass.min.css" />
 
   <script type="application/ld+json">
   {
@@ -269,11 +269,16 @@
               <li>Digital health record access to diagnostics results and consultation reports.</li>
             </ul>
             <div class="bento-tile-photo" aria-hidden="true">
-              <img src="onsite-clinic-900.webp"
-                   srcset="onsite-clinic-600.webp 600w, onsite-clinic-900.webp 900w, onsite-clinic-1200.webp 1200w"
-                   sizes="(max-width: 880px) 100vw, 600px"
-                   alt=""
-                   loading="lazy" decoding="async" width="900" height="675" />
+              <picture>
+                <source type="image/avif"
+                        srcset="onsite-clinic-600.avif 600w, onsite-clinic-900.avif 900w, onsite-clinic-1200.avif 1200w"
+                        sizes="(max-width: 880px) 100vw, 600px" />
+                <img src="onsite-clinic-900.webp"
+                     srcset="onsite-clinic-600.webp 600w, onsite-clinic-900.webp 900w, onsite-clinic-1200.webp 1200w"
+                     sizes="(max-width: 880px) 100vw, 600px"
+                     alt=""
+                     loading="lazy" decoding="async" width="900" height="675" />
+              </picture>
             </div>
           </article>
           <article class="bento-tile bento-tile-2 reveal">
@@ -467,33 +472,45 @@
           </article>
         </div>
 
-        <div class="team-subsection reveal" style="margin-top: var(--s-7); border-top: 1px solid var(--line); padding-top: var(--s-6);">
-          <h3 class="subsection-title" style="margin-bottom: var(--s-2);">Meet some of our care team</h3>
-          <p class="subsection-intro" style="color: var(--ink-2); margin-bottom: var(--s-5); max-width: 62ch;">A dedicated staff of care managers, many with a background in the Indian Armed Forces, deployed to your workforce.</p>
-          
-          <div class="team-grid team-grid--quartet" style="margin-top: var(--s-4);">
-            <div class="team-card reveal" style="padding: var(--s-4); display: flex; flex-direction: column; align-items: center; text-align: center;">
-              <img src="team-ekta-540.webp" srcset="team-ekta-270.webp 270w, team-ekta-540.webp 540w" sizes="120px" alt="Maj Ekta Sharma (Retd), Care Manager" loading="lazy" decoding="async" width="540" height="540" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: 50% 25%; margin-bottom: var(--s-3);" />
-              <strong style="font-size: 16px; margin-bottom: 4px; color: var(--ink);">Maj Ekta Sharma (Retd)</strong>
-              <span style="font-size: 13px; color: var(--gold-deep); font-weight: 500;">Care Manager</span>
+        <div class="team-subsection reveal">
+          <h3 class="subsection-title">Meet some of our care team</h3>
+          <p class="subsection-intro">A dedicated staff of care managers, many with a background in the Indian Armed Forces, deployed to your workforce.</p>
+
+          <div class="team-grid team-grid--quartet">
+            <div class="team-card reveal">
+              <picture>
+                <source type="image/avif" srcset="team-ekta-270.avif 270w, team-ekta-540.avif 540w" sizes="120px" />
+                <img class="team-cm-photo team-cm-photo--ekta" src="team-ekta-540.webp" srcset="team-ekta-270.webp 270w, team-ekta-540.webp 540w" sizes="120px" alt="Maj Ekta Sharma (Retd), Care Manager" loading="lazy" decoding="async" width="540" height="540" />
+              </picture>
+              <strong class="team-cm-name">Maj Ekta Sharma (Retd)</strong>
+              <span class="team-cm-role">Care Manager</span>
             </div>
 
-            <div class="team-card reveal" style="padding: var(--s-4); display: flex; flex-direction: column; align-items: center; text-align: center;">
-              <img src="team-ebenezer-540.webp" srcset="team-ebenezer-270.webp 270w, team-ebenezer-540.webp 540w" sizes="120px" alt="Ebenezer Christudoss, Care Manager" loading="lazy" decoding="async" width="540" height="540" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: var(--s-3);" />
-              <strong style="font-size: 16px; margin-bottom: 4px; color: var(--ink);">Ebenezer Christudoss</strong>
-              <span style="font-size: 13px; color: var(--gold-deep); font-weight: 500;">Care Manager</span>
+            <div class="team-card reveal">
+              <picture>
+                <source type="image/avif" srcset="team-ebenezer-270.avif 270w, team-ebenezer-540.avif 540w" sizes="120px" />
+                <img class="team-cm-photo" src="team-ebenezer-540.webp" srcset="team-ebenezer-270.webp 270w, team-ebenezer-540.webp 540w" sizes="120px" alt="Ebenezer Christudoss, Care Manager" loading="lazy" decoding="async" width="540" height="540" />
+              </picture>
+              <strong class="team-cm-name">Ebenezer Christudoss</strong>
+              <span class="team-cm-role">Care Manager</span>
             </div>
 
-            <div class="team-card reveal" style="padding: var(--s-4); display: flex; flex-direction: column; align-items: center; text-align: center;">
-              <img src="team-seema-540.webp" srcset="team-seema-270.webp 270w, team-seema-540.webp 540w" sizes="120px" alt="Seema Gupta, Care Manager" loading="lazy" decoding="async" width="540" height="540" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: var(--s-3);" />
-              <strong style="font-size: 16px; margin-bottom: 4px; color: var(--ink);">Seema Gupta</strong>
-              <span style="font-size: 13px; color: var(--gold-deep); font-weight: 500;">Care Manager</span>
+            <div class="team-card reveal">
+              <picture>
+                <source type="image/avif" srcset="team-seema-270.avif 270w, team-seema-540.avif 540w" sizes="120px" />
+                <img class="team-cm-photo" src="team-seema-540.webp" srcset="team-seema-270.webp 270w, team-seema-540.webp 540w" sizes="120px" alt="Seema Gupta, Care Manager" loading="lazy" decoding="async" width="540" height="540" />
+              </picture>
+              <strong class="team-cm-name">Seema Gupta</strong>
+              <span class="team-cm-role">Care Manager</span>
             </div>
 
-            <div class="team-card reveal" style="padding: var(--s-4); display: flex; flex-direction: column; align-items: center; text-align: center;">
-              <img src="team-niranjan-540.webp" srcset="team-niranjan-270.webp 270w, team-niranjan-540.webp 540w" sizes="120px" alt="Sub Maj Niranjan Lal (Retd), Care Manager" loading="lazy" decoding="async" width="540" height="540" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: var(--s-3);" />
-              <strong style="font-size: 16px; margin-bottom: 4px; color: var(--ink);">Sub Maj Niranjan Lal (Retd)</strong>
-              <span style="font-size: 13px; color: var(--gold-deep); font-weight: 500;">Care Manager</span>
+            <div class="team-card reveal">
+              <picture>
+                <source type="image/avif" srcset="team-niranjan-270.avif 270w, team-niranjan-540.avif 540w" sizes="120px" />
+                <img class="team-cm-photo" src="team-niranjan-540.webp" srcset="team-niranjan-270.webp 270w, team-niranjan-540.webp 540w" sizes="120px" alt="Sub Maj Niranjan Lal (Retd), Care Manager" loading="lazy" decoding="async" width="540" height="540" />
+              </picture>
+              <strong class="team-cm-name">Sub Maj Niranjan Lal (Retd)</strong>
+              <span class="team-cm-role">Care Manager</span>
             </div>
           </div>
         </div>
@@ -641,9 +658,13 @@
         </div>
 
         <figure class="about-environment" aria-label="Anara on-site clinic">
-          <img src="image2.jpg"
-               alt="An Anara physician at an on-site corporate clinic"
-               loading="lazy" decoding="async" width="1074" height="805" />
+          <picture>
+            <source type="image/avif" srcset="image2.avif" />
+            <source type="image/webp" srcset="image2.webp" />
+            <img src="image2.jpg"
+                 alt="An Anara physician at an on-site corporate clinic"
+                 loading="lazy" decoding="async" width="1074" height="805" />
+          </picture>
           <figcaption>
             <span class="about-environment-tag">On-site, in your office</span>
             <span class="about-environment-cap">Anara clinics are set up inside your premises — physician, equipment, lab logistics included.</span>
@@ -660,11 +681,16 @@
           <div class="about-team-grid about-team-grid--asym">
             <article class="about-person about-person--hero" style="grid-area: hero">
               <div class="about-portrait about-portrait--tall">
-                <img src="team-rahul-800.webp"
-                     srcset="team-rahul-540.webp 540w, team-rahul-800.webp 800w"
-                     sizes="(max-width: 880px) 100vw, 50vw"
-                     alt="Rahul Reddy, Founder &amp; CEO of Anara Health"
-                     loading="lazy" decoding="async" width="540" height="810" />
+                <picture>
+                  <source type="image/avif"
+                          srcset="team-rahul-540.avif 540w, team-rahul-800.avif 800w"
+                          sizes="(max-width: 880px) 100vw, 50vw" />
+                  <img src="team-rahul-800.webp"
+                       srcset="team-rahul-540.webp 540w, team-rahul-800.webp 800w"
+                       sizes="(max-width: 880px) 100vw, 50vw"
+                       alt="Rahul Reddy, Founder &amp; CEO of Anara Health"
+                       loading="lazy" decoding="async" width="540" height="810" />
+                </picture>
               </div>
               <div class="about-person-body">
                 <span class="about-role">Founder &amp; CEO</span>
@@ -675,11 +701,16 @@
 
             <article class="about-person" style="grid-area: a">
               <div class="about-portrait">
-                <img src="team-jason-540.webp"
-                     srcset="team-jason-270.webp 270w, team-jason-540.webp 540w"
-                     sizes="(max-width: 880px) 50vw, 22vw"
-                     alt="Dr. Jason Paruthi, Chief Product Officer"
-                     loading="lazy" decoding="async" width="540" height="534" />
+                <picture>
+                  <source type="image/avif"
+                          srcset="team-jason-270.avif 270w, team-jason-540.avif 540w"
+                          sizes="(max-width: 880px) 50vw, 22vw" />
+                  <img src="team-jason-540.webp"
+                       srcset="team-jason-270.webp 270w, team-jason-540.webp 540w"
+                       sizes="(max-width: 880px) 50vw, 22vw"
+                       alt="Dr. Jason Paruthi, Chief Product Officer"
+                       loading="lazy" decoding="async" width="540" height="534" />
+                </picture>
               </div>
               <div class="about-person-body">
                 <span class="about-role">Chief Product Officer</span>
@@ -690,11 +721,16 @@
 
             <article class="about-person" style="grid-area: b">
               <div class="about-portrait">
-                <img src="team-abinash-540.webp"
-                     srcset="team-abinash-270.webp 270w, team-abinash-540.webp 540w"
-                     sizes="(max-width: 880px) 50vw, 22vw"
-                     alt="Dr. Abinash Paul, Chief Medical Officer"
-                     loading="lazy" decoding="async" width="540" height="540" />
+                <picture>
+                  <source type="image/avif"
+                          srcset="team-abinash-270.avif 270w, team-abinash-540.avif 540w"
+                          sizes="(max-width: 880px) 50vw, 22vw" />
+                  <img src="team-abinash-540.webp"
+                       srcset="team-abinash-270.webp 270w, team-abinash-540.webp 540w"
+                       sizes="(max-width: 880px) 50vw, 22vw"
+                       alt="Dr. Abinash Paul, Chief Medical Officer"
+                       loading="lazy" decoding="async" width="540" height="540" />
+                </picture>
               </div>
               <div class="about-person-body">
                 <span class="about-role">Chief Medical Officer</span>
@@ -719,11 +755,16 @@
         <div class="trust-grid">
           <div class="founder reveal">
             <div class="founder-portrait has-photo">
-              <img src="team-rahul-540.webp"
-                   srcset="team-rahul-540.webp 540w, team-rahul-800.webp 800w"
-                   sizes="(max-width: 880px) 100vw, 380px"
-                   alt="Rahul Reddy, Founder &amp; CEO of Anara Health"
-                   loading="lazy" decoding="async" width="540" height="810" />
+              <picture>
+                <source type="image/avif"
+                        srcset="team-rahul-540.avif 540w, team-rahul-800.avif 800w"
+                        sizes="(max-width: 880px) 100vw, 380px" />
+                <img src="team-rahul-540.webp"
+                     srcset="team-rahul-540.webp 540w, team-rahul-800.webp 800w"
+                     sizes="(max-width: 880px) 100vw, 380px"
+                     alt="Rahul Reddy, Founder &amp; CEO of Anara Health"
+                     loading="lazy" decoding="async" width="540" height="810" />
+              </picture>
             </div>
             <div class="founder-quote">
               <blockquote>
@@ -946,6 +987,6 @@
     </div>
   </footer>
 
-  <script src="anara-v2-glass.js" defer></script>
+  <script src="anara-v2-glass.min.js" defer></script>
 </body>
 </html>
