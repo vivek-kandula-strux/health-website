@@ -629,6 +629,25 @@ body.nav-open { overflow: hidden; }
   color: var(--success);
 }
 
+/* Lab card — concern (red) variant */
+.float-card--lab.is-concern .fc-pill {
+  color: var(--danger);
+  background: rgba(185,28,28,0.10);
+}
+.float-card--lab.is-concern .fc-dot {
+  background: var(--danger);
+  box-shadow: 0 0 0 3px rgba(185,28,28,0.18);
+}
+.float-card--lab.is-concern .fc-bar {
+  background: rgba(185,28,28,0.10);
+}
+.float-card--lab.is-concern .fc-bar i {
+  background: linear-gradient(90deg, var(--danger), #E04848);
+}
+.float-card--lab.is-concern .fc-tag {
+  color: var(--danger);
+}
+
 /* Card 3 — Stat / participation */
 .float-card--stat {
   bottom: -4%; left: 14%;
